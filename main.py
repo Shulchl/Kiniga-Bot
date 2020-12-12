@@ -37,27 +37,17 @@ async def feed():
                     except: 
                         print('Não encontrei nenhum link...')
                         await asyncio.sleep(3)
-                        print('Reiniciando:')
-                        await asyncio.sleep(2)
-                        print('Em 3...')
-                        await asyncio.sleep(2)
-                        print('2...')
-                        await asyncio.sleep(2)
-                        print('1...')
-                        return
+                    
+                    finally: 
+                        pass
+                        
             except:
                 print('Não encontrei nenhum titulo...')
                 await asyncio.sleep(3)
-                print('Reiniciando:')
-                await asyncio.sleep(2)
-                print('Em 3...')
-                await asyncio.sleep(2)
-                print('2...')
-                await asyncio.sleep(2)
-                print('1...')
-                return
                 
-
+            finally: 
+                pass
+            
 client.loop.create_task(feed())
 
 client.run(os.getenv('TOKEN'))
