@@ -48,4 +48,4 @@ async def feed():
 
 client.loop.create_task(feed())
 
-client.run("NzQxNzcwNDkwNTk4NjUzOTkz.Xy8Zmg.8qxMZGDEZV2BcB_zXQ1-T-1pcRs")
+client.run(Token)
