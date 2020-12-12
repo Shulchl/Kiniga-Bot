@@ -36,12 +36,27 @@ async def feed():
                             await asyncio.sleep(30)
                     except: 
                         print('Não encontrei nenhum link...')
-                        await asyncio.sleep(300)
-                        pass
+                        await asyncio.sleep(3)
+                        print('Reiniciando:')
+                        await asyncio.sleep(2)
+                        print('Em 3...')
+                        await asyncio.sleep(2)
+                        print('2...')
+                        await asyncio.sleep(2)
+                        print('1...')
+                        return
             except:
                 print('Não encontrei nenhum titulo...')
-                await asyncio.sleep(300)
-                pass
+                await asyncio.sleep(3)
+                print('Reiniciando:')
+                await asyncio.sleep(2)
+                print('Em 3...')
+                await asyncio.sleep(2)
+                print('2...')
+                await asyncio.sleep(2)
+                print('1...')
+                return
+                
 
 client.loop.create_task(feed())
 
