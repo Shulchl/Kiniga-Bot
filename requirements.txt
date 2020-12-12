@@ -1,4 +1,4 @@
 discord_timers==0.1.0
 discord==1.0.1
-requests
+requests[security] == 2.9.1 
 bs4
