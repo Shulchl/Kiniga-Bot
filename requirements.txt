@@ -1,5 +1,4 @@
 requests==2.25.0
-win10toast==0.9
 discord.py==1.5.1
 beautifulsoup4==4.9.3
 discord==1.0.1
