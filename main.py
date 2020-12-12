@@ -3,7 +3,6 @@ from discord.ext import commands
 from datetime import date, datetime, timedelta  
 import requests
 from bs4 import BeautifulSoup
-from win10toast import ToastNotifier
 
 client = discord.Client()
 
@@ -30,8 +29,6 @@ async def feed():
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l['href']))
                             print('\n\nSaiu o {} de {}! \n\nLeia aqui: {} '.format(l.get_text(), t.get_text(), l['href']))
-                            notify = ToastNotifier()
-                            notify.show_toast(f"\n\nSaiu capítulo novo de {t.get_text()}!", f"Entre no site e leia o {l.get_text()} de {t.get_text()}!!", duration=10)
                             f = open("r.txt", "w")
                             f.write(l['href'])
                             f.close()
