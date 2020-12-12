@@ -45,4 +45,4 @@ async def feed():
 
 client.loop.create_task(feed())
 
-client.run('TOKEN')
+client.run(os.getenv('TOKEN'))
