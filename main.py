@@ -36,12 +36,12 @@ async def feed():
                             await asyncio.sleep(30)
                     except: 
                         print('Não encontrei nenhum link...')
-                        await asyncio.sleep(3540)
-                        await client.logout()
+                        await asyncio.sleep(300)
+                        pass
             except:
                 print('Não encontrei nenhum titulo...')
-                await asyncio.sleep(5)
-                await client.logout()
+                await asyncio.sleep(300)
+                pass
 
 client.loop.create_task(feed())
 
