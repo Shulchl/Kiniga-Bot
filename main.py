@@ -18,27 +18,22 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        f = open("r.txt", "r")
-                        ler_l = f.read()
+                        f = open("r.txt")
                         global l_r
                         l_r = l['href']
-                        if ler_l == l_r:
-                            f.close()
+                        if f.read() == l_r:
+                            f.write(l_r)
                             #print('Parece que não tem nada novo...')
-                            g = open("r.txt", "w")
-                            g.write(l_r)
-                            g.close()
                             await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l_r))
                             print('\n\nSaiu o {} de {}! \n\nLeia aqui: {} '.format(l.get_text(), t.get_text(), l_r))
-                            a = open("r.txt", "w")
-                            a.write(l_r)
-                            a.close()
+                            f.write(l_r)
                             l_r = ''
-                            await asyncio.sleep(30)
+                            f.close()
+                            await asyncio.sleep(180)
                     except: 
                         print('Não encontrei nenhum link...')
                         await asyncio.sleep(3)
