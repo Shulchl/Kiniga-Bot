@@ -18,9 +18,6 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                links = table.find_all('td', attrs={'class':'release'})[0]
-                for l in links.find_all('a', href=True):
-                    try:
                         f = open("r.txt", "r")
                         l_r = l['href']
                         if f.read() == l_r:
