@@ -23,18 +23,19 @@ async def feed():
                         l_r = l['href']
                         if ler_l == l_r:
                             #print('Parece que não tem nada novo...')
-                            f = open("r.txt", "w")
-                            f.write(l['href'])
                             f.close()
+                            g = open("r.txt", "w")
+                            g.write(l['href'])
+                            g.close()
                             await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l['href']))
                             print('\n\nSaiu o {} de {}! \n\nLeia aqui: {} '.format(l.get_text(), t.get_text(), l['href']))
-                            f = open("r.txt", "w")
-                            f.write(l['href'])
-                            f.close()
+                            a = open("r.txt", "w")
+                            a.write(l['href'])
+                            a.close()
                             l_r = ''
                             await asyncio.sleep(30)
                     except: 
