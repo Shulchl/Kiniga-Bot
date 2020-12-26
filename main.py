@@ -41,6 +41,7 @@ async def feed():
                             f = open("r.txt", "w")
                             f.write(l_r)
                             f.close()
+                            await asyncio.sleep(180)
                     except: 
                         print('Não encontrei nenhum link...')
                         await asyncio.sleep(3)
