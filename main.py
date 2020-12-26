@@ -25,7 +25,7 @@ async def feed():
                             g.close()
                             #print('Parece que não tem nada novo...')
                             await asyncio.sleep(300)
-                        else if g.read() != l_r:
+                        elif g.read() != l_r:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l_r))
@@ -36,7 +36,7 @@ async def feed():
                             l_r = ''
                             f.close()
                             await asyncio.sleep(180)
-                         else:
+                        else:
                             g.close()
                             f = open("r.txt", "w")
                             f.write(l_r)
