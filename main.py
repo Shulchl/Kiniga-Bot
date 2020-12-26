@@ -23,6 +23,9 @@ async def feed():
                         l_r = l['href']
                         if ler_l == l_r:
                             #print('Parece que não tem nada novo...')
+                            f = open("r.txt", "w")
+                            f.write(l['href'])
+                            f.close()
                             await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
