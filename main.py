@@ -22,8 +22,8 @@ async def feed():
                         ler_l = f.read()
                         global l_r
                         l_r = l['href']
-                        f.close()
                         if ler_l == l_r:
+                            f.close()
                             #print('Parece que não tem nada novo...')
                             g = open("r.txt", "w")
                             g.write(l_r)
