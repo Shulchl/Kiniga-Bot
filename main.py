@@ -23,7 +23,8 @@ async def feed():
                         l_r = l['href']
                         if ler_l == l_r:
                             #print('Parece que não tem nada novo...')
-                            print(ler_l, "\n e \n", ler_l, "\nJá foram postados\n\n")
+                            print(l_r)
+                            print(ler_l)
                             await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
