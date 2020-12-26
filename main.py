@@ -19,6 +19,7 @@ async def feed():
                 for l in links.find_all('a', href=True):
                     try:
                         f = open("r.txt", "r")
+                        global l_r
                         l_r = l['href']
                         if f.read() == l_r:
                             f.close()
