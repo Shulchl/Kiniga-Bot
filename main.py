@@ -1,6 +1,5 @@
 import discord, os, asyncio, random, re
 from discord.ext import commands
-from datetime import date, datetime, timedelta  
 import requests
 from bs4 import BeautifulSoup
 
@@ -19,37 +18,22 @@ async def feed():
                 for l in links.find_all('a', href=True):
                     try:
                         f = open("r.txt", "r")
-                        ler_l = f.read()
                         l_r = l['href']
-                        if ler_l == l_r:
-                            #print('Parece que não tem nada novo...')
-                            print(l_r)
-                            print(ler_l)
-                            await asyncio.sleep(300)
+                        if f.read() == l_r:
+                            await asyncio.sleep(30)
                         else:
-                            channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
+                            channel = discord.utils.get(client.get_all_channels(), guild__name='Servidor de Shuichiff', name='geral')
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l['href']))
-                            print('\n\nSaiu o {} de {}! \n\nLeia aqui: {} '.format(l.get_text(), t.get_text(), l['href']))
                             f = open("r.txt", "w")
                             f.write(l['href'])
                             f.close()
-                            l_r = ''
                             await asyncio.sleep(30)
                     except: 
-                        print('Não encontrei nenhum link...')
                         await asyncio.sleep(3)
-                    
-                    finally: 
-                        pass
-                        
             except:
-                print('Não encontrei nenhum titulo...')
                 await asyncio.sleep(3)
-                
-            finally: 
-                pass
             
 client.loop.create_task(feed())
 
-client.run(os.getenv('TOKEN'))
+client.run("TOKEN")
