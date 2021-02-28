@@ -22,7 +22,7 @@ async def feed():
                         if f.read() == l_r:
                             await asyncio.sleep(30)
                         else:
-                            channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡lançamentos')
+                            channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
                             await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
                             await channel.send('Leia aqui: {}'.format(l['href']))
                             f = open("r.txt", "w")
