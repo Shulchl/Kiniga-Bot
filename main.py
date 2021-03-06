@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 
 client = discord.Client()
 
+f = ''
+
 @client.event
 async def feed():
     await client.wait_until_ready()
@@ -17,17 +19,14 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        f = open("r.txt", "r")
-                        l_r = l['href']
-                        if f.read() == l_r:
+                        global f
+                        if f == l['href']:
                             await asyncio.sleep(30)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
-                            await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
-                            await channel.send('Leia aqui: {}'.format(l['href']))
-                            f = open("r.txt", "w")
-                            f.write(l['href'])
-                            f.close()
+                            await channel.send('Saiu o **{}** de **{}**!\n\n_**Leia agora**_! {}'.format(l.get_text(), t.get_text(), l['href']))
+                            f = l['href']
+                            
                             await asyncio.sleep(30)
                     except: 
                         await asyncio.sleep(3)
