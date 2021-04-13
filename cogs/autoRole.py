@@ -29,7 +29,7 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def projeto(self, ctx, role: discord.Role, member: discord.Member = None):
-        if ctx.message.channel == ctx.guild.get_channel(599736377441124353):
+        if ctx.message.channel == ctx.guild.get_channel(831561655329751062):
             member = member or ctx.author
             role_id = role.id
             autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
