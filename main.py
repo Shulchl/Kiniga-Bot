@@ -12,6 +12,14 @@ client.remove_command('help')
 f = ''
 
 @client.event
+async def on_ready():
+    try:
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="kiniga.com"))
+        print(f'Tudo perfeito!')
+    except:
+        print(f'Não foi possivel adicionar uma atividade.')
+
+@client.event
 async def feed():
     await client.wait_until_ready()
     while not client.is_closed():
