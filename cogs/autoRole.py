@@ -1,4 +1,4 @@
-import discord, asyncio, re, sqlite3
+import discord, asyncio, re
 from discord.ext import commands
 import discord.utils 
 from discord.utils import get
@@ -22,7 +22,7 @@ class Role(commands.Cog, name='Cargos'):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Cog de Cargos funcionando!       [√]')
+        print('Categoria de Cargos funcionando!       [√]')
 
     @guild_only()
     @commands.command(name='projeto', help='Recebe um determinado cargo ao digitar `.projeto <história> <usuário>` __(campo usuário é opcional)__ ')
