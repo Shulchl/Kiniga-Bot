@@ -3,7 +3,11 @@ from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 
-client = discord.Client()
+intents = discord.Intents().all()
+intents.members = True
+
+client = commands.Bot(command_prefix = ".", intents=intents)
+client.remove_command('help')
 
 f = ''
 
@@ -19,20 +23,57 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        global f
-                        if f == l['href']:
-                            await asyncio.sleep(30)
+                        prevUpdate = open("r.txt", "r")
+                        if l['href'] != prevUpdate.read():
+                            global f
+                            if f == l['href']:
+                                await asyncio.sleep(300)
+                            else:
+                                channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
+                                await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
+                                await channel.send('Leia aqui: {}'.format(l['href']))
+                                f = l['href']
+                                lastUpdate = open("r.txt", "w")
+                                lastUpdate.write(f)
+                                lastUpdate.close()
+                                await asyncio.sleep(300)
                         else:
-                            channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
-                            await channel.send('Saiu o **{}** de **{}**!\n\n_**Leia agora**_! {}'.format(l.get_text(), t.get_text(), l['href']))
-                            f = l['href']
-                            
-                            await asyncio.sleep(30)
+                            await asyncio.sleep(300)
                     except: 
-                        await asyncio.sleep(3)
+                        await asyncio.sleep(30)
             except:
-                await asyncio.sleep(3)
+                await asyncio.sleep(30)
             
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send('Olha, eu chuto que esse comando não exite...')
+        await asyncio.sleep(1)
+        await ctx.channel.purge(limit=2)
+
+@client.command()
+@commands.is_owner()
+async def load(ctx, extension):
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send(f"I have loaded the command")
+
+@client.command()
+@commands.is_owner()
+async def reload(ctx, extension):
+    client.unload_extension(f'cogs.{extension}')
+    client.load_extension(f'cogs.{extension}')
+    await ctx.send("I have reloaded the command")
+
+@client.command()
+@commands.is_owner()
+async def unload(ctx, extension):
+    client.unload_extension(f'cogs.{extension}')
+    await ctx.send("I have unloaded the command")
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
+
 client.loop.create_task(feed())
 
 client.run("TOKEN")
