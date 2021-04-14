@@ -32,7 +32,7 @@ async def feed():
                 for l in links.find_all('a', href=True):
                     try:
                         mode = 'r+' if os.path.exists("r.txt") else 'w+'
-                        with open('r.txt', mode) as prevUpdate:with open('r.txt', 'w+') as prevUpdate:
+                        with open('r.txt', mode) as prevUpdate:
                             if l['href'] != prevUpdate.read():
                                 global f
                                 if f == l['href']:
