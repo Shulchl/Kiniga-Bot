@@ -31,8 +31,7 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        mode = 'a+' if os.path.exists("r.txt") else 'w+'
-                        with open('r.txt', mode) as prevUpdate:
+                        with open('r.txt', 'rw+') as prevUpdate:
                             if l['href'] != prevUpdate.read():
                                 global f
                                 if f == l['href']:
