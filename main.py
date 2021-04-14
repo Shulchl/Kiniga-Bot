@@ -31,21 +31,19 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        prevUpdate = open("r.txt", "r+")
-                        if l['href'] != prevUpdate.read():
-                            global f
-                            if f == l['href']:
-                                prevUpdate.close()
-                                return await asyncio.sleep(300)
-                            else:
-                                channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
-                                await channel.send('Saiu o **{}** de **{}**!\n\n{}'.format(l.get_text(), t.get_text(), l['href']))
-                                f = l['href']
-                                prevUpdate.write(f)
-                                prevUpdate.close()
-                                await asyncio.sleep(300)
-                        else:
-                            await asyncio.sleep(300)
+                        with open('r.txt', 'a+') as prevUpdate:
+                            if l['href'] != prevUpdate.read():
+                                global f
+                                if f == l['href']:
+                                    prevUpdate.close()
+                                    return await asyncio.sleep(300)
+                                else:
+                                    channel = discord.utils.get(client.get_all_channels(), guild__name='Servidor de Shuichiff', name='anuncios')
+                                    await channel.send('Saiu o **{}** de **{}**!\n\n{}'.format(l.get_text(), t.get_text(), l['href']))
+                                    f = l['href']
+                                    prevUpdate.write(f)
+                                    prevUpdate.close()
+                                    return await asyncio.sleep(300)
                     except: 
                         return await asyncio.sleep(30)
             except:
