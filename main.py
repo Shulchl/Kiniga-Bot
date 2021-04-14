@@ -31,24 +31,19 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        mode = 'r+' if os.path.exists("r.txt") else 'w+'
-                        with open('r.txt', mode) as prevUpdate:
-                            if l['href'] != prevUpdate.read():
-                                global f
-                                if f == l['href']:
-                                    prevUpdate.close()
-                                    return await asyncio.sleep(300)
-                                else:
-                                    channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
-                                    await channel.send('Saiu o **{}** de **{}**!\n\n{}'.format(l.get_text(), t.get_text(), l['href']))
-                                    f = l['href']
-                                    prevUpdate.write(f)
-                                    prevUpdate.close()
-                                    return await asyncio.sleep(300)
+                        global f
+                        if f == l['href']:
+                            return await asyncio.sleep(300)
+                        else:
+                            channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
+                            await channel.send('Saiu o **{}** de **{}**!\n\n_**Leia agora**_! {}'.format(l.get_text(), t.get_text(), l['href']))
+                            f = l['href']
+                            await asyncio.sleep(300)
                     except: 
                         return await asyncio.sleep(30)
             except:
-                return await asyncio.sleep(30)
+                return await asyncio.sleep(300)
+            
             
 @client.event
 async def on_command_error(ctx, error):
