@@ -38,8 +38,7 @@ async def feed():
                                 await asyncio.sleep(300)
                             else:
                                 channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
-                                await channel.send('Saiu o **{}** de **{}**!'.format(l.get_text(), t.get_text()))
-                                await channel.send('Leia aqui: {}'.format(l['href']))
+                                await channel.send('Saiu o **{}** de **{}**!\n\n{}'.format(l.get_text(), t.get_text(), l['href']))
                                 f = l['href']
                                 lastUpdate = open("r.txt", "w")
                                 lastUpdate.write(f)
