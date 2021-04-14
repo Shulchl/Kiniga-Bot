@@ -31,30 +31,30 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        prevUpdate = open("r.txt", "r")
+                        prevUpdate = open("r.txt", "r+")
                         if l['href'] != prevUpdate.read():
                             global f
                             if f == l['href']:
-                                await asyncio.sleep(300)
+                                prevUpdate.close()
+                                return await asyncio.sleep(300)
                             else:
                                 channel = discord.utils.get(client.get_all_channels(), guild__name='Kiniga Brasil', name='✶⊷彡recentes')
                                 await channel.send('Saiu o **{}** de **{}**!\n\n{}'.format(l.get_text(), t.get_text(), l['href']))
                                 f = l['href']
-                                lastUpdate = open("r.txt", "w")
-                                lastUpdate.write(f)
-                                lastUpdate.close()
+                                prevUpdate.write(f)
+                                prevUpdate.close()
                                 await asyncio.sleep(300)
                         else:
                             await asyncio.sleep(300)
                     except: 
-                        await asyncio.sleep(30)
+                        return await asyncio.sleep(30)
             except:
-                await asyncio.sleep(30)
+                return await asyncio.sleep(30)
             
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send('Olha, eu chuto que esse comando não exite...')
+        await ctx.send('Olha, eu chuto que esse comando não existe...')
         await asyncio.sleep(1)
         await ctx.channel.purge(limit=2)
 
