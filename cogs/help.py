@@ -28,7 +28,7 @@ class Help(commands.Cog):
         if not cog:
             #"""Cog listing.?"""
             halp=discord.Embed(title='Essa é a lista de categorias com comandos',
-                               description='Use `{command_prefix}help *categoria*` para saber mais detalhes sobre a categoria!\n(A categoria deve começar com letra maiúscula.)')
+                               description='Use `.help *categoria*` para saber mais detalhes sobre a categoria!\n(A categoria deve começar com letra maiúscula.)')
             cogs_desc = ''
             for x in self.client.cogs:
                 cogs_desc += ('{} - {}'.format(x,self.client.cogs[x].__doc__)+'\n')
