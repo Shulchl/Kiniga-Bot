@@ -122,7 +122,6 @@ class Role(commands.Cog, name='Cargos'):
                 member = user_guild
             else:
                 member = ctx.author
-                pass
             
             aRole = []
             a_clean = []
@@ -138,8 +137,8 @@ class Role(commands.Cog, name='Cargos'):
                 else:
                     pass
             else:
-                await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-                return
+                return await ctx.send("Você precisa digitar alguma coisa, meu querido.")
+                
                 
             emb = discord.Embed(title='Opa!',description='O cargo **{}** será criado assim que algum ademir reagir à essa mensagem!'.format(a_clean),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
             msg = await ctx.send('',embed=emb)
