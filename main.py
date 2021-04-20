@@ -38,8 +38,8 @@ async def feed():
                             return await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), 
-                                                        guild__name='Testando bot', 
-                                                        name='anuncios')
+                                                        guild__name='Kiniga Brasil', 
+                                                        name='✶⊷彡recentes')
                             await channel.send('Saiu o **{}** de **{}**!\n{}'.format(l.get_text(), 
                                                                                      t.get_text(), 
                                                                                      l['href']))

@@ -39,10 +39,10 @@ class Noticia(commands.Cog):
         ### Start the magic ###
         emb = discord.Embed(title='Certo!',description=f'Deseja usar "**{conteudo}**" como conteúdo da notícia?',color=discord.Color.orange()).set_footer(text='Para cancelar, basta aguardar.')
         msg = await ctx.send('',embed=emb)
-        await msg.add_reaction('✅')
+        await msg.add_reaction('✔')
         await asyncio.sleep(1)
         def check(reaction, member):
-            return member == ctx.author and str(reaction.emoji) == '✅'
+            return member == ctx.author and str(reaction.emoji) == '✔'
         try:
             await self.client.wait_for('reaction_add',timeout=30.0, check=check)
             emb2 = discord.Embed(title='Digite o título!',description='*Cri, cri...*',color=discord.Color.orange()).set_footer(text='Para cancelar, basta aguardar.')
@@ -54,10 +54,10 @@ class Noticia(commands.Cog):
                 titulo = titulo.content
                 emb3 = discord.Embed(title='Certo!', description="Deseja usar\n\n**{}**\n\n... como título da notícia?".format(titulo), color=discord.Color.orange()).set_footer(text='Para cancelar, basta aguardar.')
                 msg3 = await ctx.send('',embed=emb3)
-                await msg3.add_reaction('✅')
+                await msg3.add_reaction('✔')
                 await asyncio.sleep(1)
                 def check_3(reaction, member):
-                    return reaction.message.id == msg3.id and str(reaction.emoji) == '✅'
+                    return reaction.message.id == msg3.id and str(reaction.emoji) == '✔'
                 try:
                     await self.client.wait_for('reaction_add',timeout=10.0, check=check_3)
                     await asyncio.sleep(1)
