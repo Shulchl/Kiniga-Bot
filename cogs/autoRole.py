@@ -33,11 +33,13 @@ class Role(commands.Cog, name='Cargos'):
             member = member or ctx.author
             role_id = role.id
             autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
-            emb = discord.Embed(title='Opa!',description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(autorRole.mention),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+            emb = discord.Embed(title='Opa!',
+                                description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(autorRole.mention),
+                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
             msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✅')
+            await msg.add_reaction('✔')
             def check_ask(reaction, member):
-                return member == ctx.author and str(reaction.emoji) == '✅'
+                return member == ctx.author and str(reaction.emoji) == '✔'
 
             try:
                 await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
@@ -59,32 +61,41 @@ class Role(commands.Cog, name='Cargos'):
                     return
 
                 if aRole:
-                    emb4 = discord.Embed(title='Opa!',description='Parece que {} já tem esse cargo.'.format(member.mention),color=discord.Color.green())
+                    emb4 = discord.Embed(title='Opa!',
+                                        description='Parece que {} já tem esse cargo.'.format(member.mention),color=discord.Color.green())
                     message = await ctx.send(embed=emb4)
                     await ctx.send(" ".join(message))
                     await asyncio.sleep(3)
                     await ctx.channel.purge(limit=2)
                     return
                 else:
-                    emb = discord.Embed(title='Certo!',description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(autorRole.mention),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                    emb = discord.Embed(title='Certo!',
+                                        description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(autorRole.mention),
+                                        color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                     msg = await ctx.send('',embed=emb)
-                    await msg.add_reaction('✅')
+                    await msg.add_reaction('✔')
                     def check_add(reaction, member):
-                        return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✅'
+                        return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
 
                     try:
                         await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                         await member.add_roles(autorRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
-                        emb4 = discord.Embed(title='Adicionado!',description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(autorRole.mention, channel),color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
+                        emb4 = discord.Embed(title='Adicionado!',
+                                            description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(autorRole.mention, 
+                                                                                                                                        channel),
+                                            color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb4)
                     except asyncio.TimeoutError:
-                        emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
+                        emb5 = discord.Embed(title='Hum...',
+                                            description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
                         await ctx.send('',embed=emb5)
                         await asyncio.sleep(3)
                         await ctx.channel.purge(limit=2)
             except asyncio.TimeoutError:
-                emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação, que tal tentar de novo?.',color=discord.Color.blurple())
+                emb5 = discord.Embed(title='Hum...',
+                                    description='Eu não recebi uma confirmação, que tal tentar de novo?.',
+                                    color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
                 await asyncio.sleep(3)
                 await ctx.channel.purge(limit=2)
@@ -140,52 +151,67 @@ class Role(commands.Cog, name='Cargos'):
                 return await ctx.send("Você precisa digitar alguma coisa, meu querido.")
                 
                 
-            emb = discord.Embed(title='Opa!',description='O cargo **{}** será criado assim que algum ademir reagir à essa mensagem!'.format(a_clean),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+            emb = discord.Embed(title='Opa!',
+                                description='O cargo **{}** será criado assim que algum ademir reagir à essa mensagem!'.format(a_clean),
+                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
             msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✅')
+            await msg.add_reaction('✔')
             await asyncio.sleep(1)
             def check_create(reaction, member):
-                return member.guild_permissions.manage_channels and reaction.message.id == msg.id and str(reaction.emoji) == '✅'
+                return member.guild_permissions.manage_channels and reaction.message.id == msg.id and str(reaction.emoji) == '✔'
             try:
                 await self.client.wait_for('reaction_add',timeout=60.0, check=check_create)
                 if user:
                     if aRole:
-                        emb = discord.Embed(title='Opa!',description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                        emb = discord.Embed(title='Opa!',
+                                            description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),
+                                            color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                         msg = await ctx.send('',embed=emb)
-                        await msg.add_reaction('✅')
+                        await msg.add_reaction('✔')
                         def check_ask(reaction, member):
-                            return member == ctx.author and str(reaction.emoji) == '✅'
+                            return member == ctx.author and str(reaction.emoji) == '✔'
                             
                         try:
                             await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
                             role_id = aRole.id
                             for role_id in member.roles:
-                                emb4 = discord.Embed(title='Opa!',description='Parece que {} já tem esse cargo.'.format(member.mention),color=discord.Color.green())
+                                emb4 = discord.Embed(title='Opa!',
+                                                    description='Parece que {} já tem esse cargo.'.format(member.mention),
+                                                    color=discord.Color.green())
                                 message = await ctx.send(embed=emb4)
                                 await ctx.send(" ".join(message))
                                 await asyncio.sleep(3)
                                 await ctx.channel.purge(limit=2)
                                 return
                             else:
-                                emb = discord.Embed(title='Certo!',description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                emb = discord.Embed(title='Certo!',
+                                                    description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
+                                                    color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                                 msg = await ctx.send('',embed=emb)
-                                await msg.add_reaction('✅')
+                                await msg.add_reaction('✔')
                                 def check_add(reaction, member):
-                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✅'
+                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                                     await member.add_roles(aRole)
                                     channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
-                                    emb4 = discord.Embed(title='Adicionado!',description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, channel),color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
+                                    emb4 = discord.Embed(title='Adicionado!',
+                                                        description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, 
+                                                                                                                                                    channel),
+                                                        color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                                     await ctx.send('',embed=emb4)
                                 except asyncio.TimeoutError:
-                                    emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
+                                    emb5 = discord.Embed(title='Hum...',
+                                                        description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',
+                                                        color=discord.Color.blurple())
                                     await ctx.send('',embed=emb5)
                                     await asyncio.sleep(3)
                                     await ctx.channel.purge(limit=2)
                         except asyncio.TimeoutError:
-                            emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação, que tal tentar de novo?.',color=discord.Color.blurple())
+                            emb5 = discord.Embed(title='Hum...',
+                                                description='Eu não recebi uma confirmação, que tal tentar de novo?.',
+                                                color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
                             await asyncio.sleep(3)
                             return await ctx.channel.purge(limit=2)
@@ -193,43 +219,60 @@ class Role(commands.Cog, name='Cargos'):
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
                         await member.add_roles(nRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
-                        emb6 = discord.Embed(title='Criado!',description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(member.mention, nRole.mention, channel.mention),color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
+                        emb6 = discord.Embed(title='Criado!',
+                                            description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(member.mention, 
+                                                                                                                                                            nRole.mention, 
+                                                                                                                                                            channel.mention),
+                                            color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         return await ctx.send('',embed=emb6)
                 else:
                     if aRole:
-                        emb = discord.Embed(title='Opa!',description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                        emb = discord.Embed(title='Opa!',
+                                            description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),
+                                            color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                         msg = await ctx.send('',embed=emb)
-                        await msg.add_reaction('✅')
+                        await msg.add_reaction('✔')
                         def check_ask(reaction, member):
-                            return member == ctx.author and str(reaction.emoji) == '✅'
+                            return member == ctx.author and str(reaction.emoji) == '✔'
                             
                         try:
                             await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
                             for role_id in member.roles:
-                                emb4 = discord.Embed(title='Opa!',description='Parece que {} já tem esse cargo.'.format(member.mention),color=discord.Color.green())
+                                emb4 = discord.Embed(title='Opa!',
+                                                    description='Parece que {} já tem esse cargo.'.format(member.mention),
+                                                    color=discord.Color.green())
                                 await ctx.send(embed=emb4)
                                 await asyncio.sleep(3)
                                 return await ctx.channel.purge(limit=2)
                             else:
-                                emb = discord.Embed(title='Certo!',description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                emb = discord.Embed(title='Certo!',
+                                                    description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
+                                                    color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                                 msg = await ctx.send('',embed=emb)
-                                await msg.add_reaction('✅')
+                                await msg.add_reaction('✔')
                                 def check_add(reaction, member):
-                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✅'
+                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                                     await member.add_roles(aRole)
                                     channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
-                                    emb4 = discord.Embed(title='Adicionado!',description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, channel),color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
+                                    emb4 = discord.Embed(title='Adicionado!',
+                                                        description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, 
+                                                                                                                                                    channel),
+                                                        color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                                     await ctx.send('',embed=emb4)
                                 except asyncio.TimeoutError:
-                                    emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
+                                    emb5 = discord.Embed(title='Hum...',
+                                                        description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',
+                                                        color=discord.Color.blurple())
                                     await ctx.send('',embed=emb5)
                                     await asyncio.sleep(3)
                                     await ctx.channel.purge(limit=2)
                         except asyncio.TimeoutError:
-                            emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação, que tal tentar de novo?.',color=discord.Color.blurple())
+                            emb5 = discord.Embed(title='Hum...',
+                                                description='Eu não recebi uma confirmação, que tal tentar de novo?.',
+                                                color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
                             await asyncio.sleep(3)
                             return await ctx.channel.purge(limit=2)
@@ -237,11 +280,17 @@ class Role(commands.Cog, name='Cargos'):
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
                         await ctx.author.add_roles(nRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
-                        emb6 = discord.Embed(title='Criado!',description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(ctx.author.mention, nRole.mention, channel.mention),color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
+                        emb6 = discord.Embed(title='Criado!',
+                                            description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(ctx.author.mention, 
+                                                                                                                                                            nRole.mention, 
+                                                                                                                                                            channel.mention),
+                                            color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb6)
                         
             except asyncio.TimeoutError:
-                emb5 = discord.Embed(title='Hum...',description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
+                emb5 = discord.Embed(title='Hum...',
+                                    description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',
+                                    color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
                 await asyncio.sleep(3)
                 return await ctx.channel.purge(limit=2)
@@ -284,39 +333,49 @@ class Role(commands.Cog, name='Cargos'):
             await ctx.send("Você precisa digitar alguma coisa, meu querido.")
             return
         #nomeRole = discord.utils.get(ctx.guild.roles, name=role)
-        emb = discord.Embed(title='Tem certeza?',description='Deseja realmente remover de {}?'.format(member.mention),color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
+        emb = discord.Embed(title='Tem certeza?',
+                            description='Deseja realmente remover de {}?'.format(member.mention),
+                            color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
         msg = await ctx.send('',embed=emb)
-        await msg.add_reaction('✅')
+        await msg.add_reaction('✔')
         
         def check(reaction, member):
-            return member == ctx.author and str(reaction.emoji) == '✅'
+            return member == ctx.author and str(reaction.emoji) == '✔'
             
         try:
             await self.client.wait_for('reaction_add',timeout=20.0, check=check)
             if aRole:
                 await member.remove_roles(role)
-                emb = discord.Embed(title='?!',description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
+                emb = discord.Embed(title='?!',
+                                    description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',
+                                    color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
                 msg = await ctx.send('',embed=emb)
-                await msg.add_reaction('✅')
+                await msg.add_reaction('✔')
                 
                 def check_delete(reaction, member):
-                    return member == ctx.author and str(reaction.emoji) == '✅'
+                    return member == ctx.author and str(reaction.emoji) == '✔'
                 
                 try:
                     await self.client.wait_for('reaction_add',timeout=10.0, check=check_delete)
                     await aRole.delete(reason="Hitória removida.")
                     await ctx.channel.purge(limit=4)
                     await asyncio.sleep(2)
-                    emb2 = discord.Embed(title='História removida!',description='Espero que não se arrependa...',color=discord.Color.green())
+                    emb2 = discord.Embed(title='História removida!',
+                                        description='Espero que não se arrependa...',
+                                        color=discord.Color.green())
                     return await ctx.send('',embed=emb2)
                     
                 except asyncio.TimeoutError:
-                    emb3 = discord.Embed(title='Certo!',description='O cargo foi removido do usuário, mas não será removido completamente do servidor.',color=discord.Color.green())
+                    emb3 = discord.Embed(title='Certo!',
+                                        description='O cargo foi removido do usuário, mas não será removido completamente do servidor.',
+                                        color=discord.Color.green())
                     await ctx.send('',embed=emb3)
                     await asyncio.sleep(5)
                     await ctx.channel.purge(limit=2)
             else:
-                emb = discord.Embed(title='Hum...',description='Parece que o usuário não tem esse cargo.',color=discord.Color.blurple())
+                emb = discord.Embed(title='Hum...',
+                                    description='Parece que o usuário não tem esse cargo.',
+                                    color=discord.Color.blurple())
                 await ctx.send('',embed=emb)
                 await asyncio.sleep(3)
                 return await ctx.channel.purge(limit=2)
