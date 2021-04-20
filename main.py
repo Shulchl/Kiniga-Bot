@@ -36,7 +36,7 @@ async def feed():
                     try:
                         global f
                         if f == l['href']:
-                            return await asyncio.sleep(300)
+                            await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), 
                                                         guild__name='Kiniga Brasil', 
@@ -47,17 +47,13 @@ async def feed():
                             f = l['href']
                             await asyncio.sleep(300)
                     except: 
-                        return await asyncio.sleep(30)
+                        await asyncio.sleep(30)
             except:
-                return await asyncio.sleep(300)
+                await asyncio.sleep(300)
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send('Olha, eu chuto que esse comando não exite...')
-
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.command()
 @commands.is_owner()
@@ -78,6 +74,9 @@ async def unload(self, ctx, extension):
     self.unload_extension(f'cogs.{extension}')
     await ctx.send("Descarreguei os comandos")
                 
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
                 
 client.loop.create_task(feed())
 
