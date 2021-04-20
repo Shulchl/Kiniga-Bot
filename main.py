@@ -1,4 +1,4 @@
-import discord, os, asyncio
+import discord, os, asyncio, re
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
@@ -8,12 +8,11 @@ intents.members = True
 
 client = commands.Bot(command_prefix = ".", 
                       intents=intents, 
-                      activity = discord.Activity(type=discord.ActivityType.watching, name="Kiniga.com"), 
+                      activity = discord.Activity(type=discord.ActivityType.watching, name="[Kiniga.com] — Leia e escreva histórias!"), 
                       status=discord.Status.online)
 client.remove_command('help')
 
 f = ''
-
 
 @client.event
 async def on_ready():
@@ -39,8 +38,8 @@ async def feed():
                             return await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), 
-                                                        guild__name='Kiniga Brasil', 
-                                                        name='✶⊷彡recentes')
+                                                        guild__name='Testando bot', 
+                                                        name='anuncios')
                             await channel.send('Saiu o **{}** de **{}**!\n{}'.format(l.get_text(), 
                                                                                      t.get_text(), 
                                                                                      l['href']))
@@ -81,4 +80,5 @@ async def unload(self, ctx, extension):
                 
 client.loop.create_task(feed())
 
-client.run("")
+client.run(os.getenv('TOKEN'))
+
