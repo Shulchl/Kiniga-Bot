@@ -54,27 +54,27 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send('Olha, eu chuto que esse comando não exite...')
 
-for filename in os.listdir('./cmds'):
+for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
-        client.load_extension(f'cmds.{filename[:-3]}')
+        client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.command()
 @commands.is_owner()
 async def load(self, ctx, extension):
-    self.load_extension(f'cmds.{extension}')
+    self.load_extension(f'cogs.{extension}')
     await ctx.send("Carreguei os comandos")
 
 @client.command()
 @commands.is_owner()
 async def reload(self, ctx, extension):
-    self.unload_extension(f'cmds.{extension}')
-    self.load_extension(f'cmds.{extension}')
+    self.unload_extension(f'cogs.{extension}')
+    self.load_extension(f'cogs.{extension}')
     await ctx.send("Recarreguei os comandos")
 
 @client.command()
 @commands.is_owner()
 async def unload(self, ctx, extension):
-    self.unload_extension(f'cmds.{extension}')
+    self.unload_extension(f'cogs.{extension}')
     await ctx.send("Descarreguei os comandos")
                 
                 

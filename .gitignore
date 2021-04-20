@@ -2,3 +2,4 @@
 cmds/__pycache__/autoRole.cpython-37.pyc
 cmds/__pycache__/help.cpython-37.pyc
 cmds/__pycache__/noticia.cpython-37.pyc
+*.pyc
