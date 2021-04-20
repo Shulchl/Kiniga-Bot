@@ -29,7 +29,8 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def projeto(self, ctx, role: discord.Role, member: discord.Member = None):
-        if ctx.message.channel == ctx.guild.get_channel(831561655329751062):
+        channel = ctx.guild.get_channel(831561655329751062)
+        if ctx.message.channel == channel:
             member = member or ctx.author
             role_id = role.id
             autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
@@ -80,10 +81,8 @@ class Role(commands.Cog, name='Cargos'):
                     try:
                         await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                         await member.add_roles(autorRole)
-                        channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb4 = discord.Embed(title='Adicionado!',
-                                            description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(autorRole.mention, 
-                                                                                                                                        channel),
+                                            description='O cargo {} foi adicionado, e agora você é autor!.'.format(autorRole.mention, 
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb4)
                     except asyncio.TimeoutError:
@@ -195,7 +194,7 @@ class Role(commands.Cog, name='Cargos'):
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                                     await member.add_roles(aRole)
-                                    channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
+                                    channel = discord.utils.get(self.client.get_all_channels(), guild__name='Kiniga Brasil', name='regras')
                                     emb4 = discord.Embed(title='Adicionado!',
                                                         description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, 
                                                                                                                                                     channel),
@@ -314,75 +313,78 @@ class Role(commands.Cog, name='Cargos'):
     @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
     @commands.has_permissions(manage_roles=True)
     async def r(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
-        member = member or ctx.author
-        
-        aRole = []
-        a_clean = []
-        
-        if role:
-            a = str(role)
-            a = a.replace('"', '')
-            a_clean = a
-            role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
-            if role_guild:
-                role_id = ctx.guild.get_role(int(role_guild.id))
-                aRole = role_id
+        channel = ctx.guild.get_channel(831561655329751062)
+        if ctx.message.channel == channel:
+            member = member or ctx.author
+
+            aRole = []
+            a_clean = []
+
+            if role:
+                a = str(role)
+                a = a.replace('"', '')
+                a_clean = a
+                role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
+                if role_guild:
+                    role_id = ctx.guild.get_role(int(role_guild.id))
+                    aRole = role_id
+                else:
+                    pass
             else:
-                pass
-        else:
-            await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-            
-        #nomeRole = discord.utils.get(ctx.guild.roles, name=role)
-        emb = discord.Embed(title='Tem certeza?',
-                            description='Deseja realmente remover de {}?'.format(member.mention),
-                            color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
-        msg = await ctx.send('',embed=emb)
-        await msg.add_reaction('✔')
-        
-        def check(reaction, member):
-            return member == ctx.author and str(reaction.emoji) == '✔'
-            
-        try:
-            await self.client.wait_for('reaction_add',timeout=20.0, check=check)
-            if aRole:
-                await member.remove_roles(role)
-                emb = discord.Embed(title='?!',
-                                    description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',
-                                    color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
-                msg = await ctx.send('',embed=emb)
-                await msg.add_reaction('✔')
-                
-                def check_delete(reaction, member):
-                    return member == ctx.author and str(reaction.emoji) == '✔'
-                
-                try:
-                    await self.client.wait_for('reaction_add',timeout=10.0, check=check_delete)
-                    await aRole.delete(reason="Hitória removida.")
-                    await ctx.channel.purge(limit=4)
-                    await asyncio.sleep(2)
-                    emb2 = discord.Embed(title='História removida!',
-                                        description='Espero que não se arrependa...',
-                                        color=discord.Color.green())
-                    await ctx.send('',embed=emb2)
-                    
-                except asyncio.TimeoutError:
-                    emb3 = discord.Embed(title='Certo!',
-                                        description='O cargo foi removido do usuário, mas não será removido completamente do servidor.',
-                                        color=discord.Color.green())
-                    await ctx.send('',embed=emb3)
-                    await asyncio.sleep(5)
+                await ctx.send("Você precisa digitar alguma coisa, meu querido.")
+
+            #nomeRole = discord.utils.get(ctx.guild.roles, name=role)
+            emb = discord.Embed(title='Tem certeza?',
+                                description='Deseja realmente remover de {}?'.format(member.mention),
+                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
+            msg = await ctx.send('',embed=emb)
+            await msg.add_reaction('✔')
+
+            def check(reaction, member):
+                return member == ctx.author and str(reaction.emoji) == '✔'
+
+            try:
+                await self.client.wait_for('reaction_add',timeout=20.0, check=check)
+                if aRole:
+                    await member.remove_roles(role)
+                    emb = discord.Embed(title='?!',
+                                        description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',
+                                        color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
+                    msg = await ctx.send('',embed=emb)
+                    await msg.add_reaction('✔')
+
+                    def check_delete(reaction, member):
+                        return member == ctx.author and str(reaction.emoji) == '✔'
+
+                    try:
+                        await self.client.wait_for('reaction_add',timeout=10.0, check=check_delete)
+                        await aRole.delete(reason="Hitória removida.")
+                        await ctx.channel.purge(limit=4)
+                        await asyncio.sleep(2)
+                        emb2 = discord.Embed(title='História removida!',
+                                            description='Espero que não se arrependa...',
+                                            color=discord.Color.green())
+                        await ctx.send('',embed=emb2)
+
+                    except asyncio.TimeoutError:
+                        emb3 = discord.Embed(title='Certo!',
+                                            description='O cargo foi removido do usuário, mas não será removido completamente do servidor.',
+                                            color=discord.Color.green())
+                        await ctx.send('',embed=emb3)
+                        await asyncio.sleep(5)
+                        await ctx.channel.purge(limit=2)
+                else:
+                    emb = discord.Embed(title='Hum...',
+                                        description='Parece que o usuário não tem esse cargo.',
+                                        color=discord.Color.blurple())
+                    await ctx.send('',embed=emb)
+                    await asyncio.sleep(3)
                     await ctx.channel.purge(limit=2)
-            else:
-                emb = discord.Embed(title='Hum...',
-                                    description='Parece que o usuário não tem esse cargo.',
-                                    color=discord.Color.blurple())
-                await ctx.send('',embed=emb)
+            except asyncio.TimeoutError:
+                await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
                 await asyncio.sleep(3)
                 await ctx.channel.purge(limit=2)
-        except asyncio.TimeoutError:
-            await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
-            await asyncio.sleep(3)
-            await ctx.channel.purge(limit=2)
+        else: return
     
     @r.error
     async def r_error(self, ctx, error):
