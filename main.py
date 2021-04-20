@@ -10,6 +10,7 @@ client = commands.Bot(command_prefix = ".",
                       intents=intents, 
                       activity = discord.Activity(type=discord.ActivityType.watching, name="[Kiniga.com] — Leia e escreva histórias!"), 
                       status=discord.Status.online)
+
 client.remove_command('help')
 
 f = ''
@@ -81,4 +82,3 @@ async def unload(self, ctx, extension):
 client.loop.create_task(feed())
 
 client.run(os.getenv('TOKEN'))
-
