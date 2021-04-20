@@ -58,7 +58,7 @@ class Role(commands.Cog, name='Cargos'):
                         pass
                 else:
                     await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-                    return
+                    
 
                 if aRole:
                     emb4 = discord.Embed(title='Opa!',
@@ -67,7 +67,7 @@ class Role(commands.Cog, name='Cargos'):
                     await ctx.send(" ".join(message))
                     await asyncio.sleep(3)
                     await ctx.channel.purge(limit=2)
-                    return
+                    
                 else:
                     emb = discord.Embed(title='Certo!',
                                         description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(autorRole.mention),
@@ -148,7 +148,7 @@ class Role(commands.Cog, name='Cargos'):
                 else:
                     pass
             else:
-                return await ctx.send("Você precisa digitar alguma coisa, meu querido.")
+                await ctx.send("Você precisa digitar alguma coisa, meu querido.")
                 
                 
             emb = discord.Embed(title='Opa!',
@@ -182,7 +182,7 @@ class Role(commands.Cog, name='Cargos'):
                                 await ctx.send(" ".join(message))
                                 await asyncio.sleep(3)
                                 await ctx.channel.purge(limit=2)
-                                return
+                                
                             else:
                                 emb = discord.Embed(title='Certo!',
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
@@ -214,7 +214,7 @@ class Role(commands.Cog, name='Cargos'):
                                                 color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
                             await asyncio.sleep(3)
-                            return await ctx.channel.purge(limit=2)
+                            await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
                         await member.add_roles(nRole)
@@ -224,7 +224,7 @@ class Role(commands.Cog, name='Cargos'):
                                                                                                                                                             nRole.mention, 
                                                                                                                                                             channel.mention),
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
-                        return await ctx.send('',embed=emb6)
+                        await ctx.send('',embed=emb6)
                 else:
                     if aRole:
                         emb = discord.Embed(title='Opa!',
@@ -243,7 +243,7 @@ class Role(commands.Cog, name='Cargos'):
                                                     color=discord.Color.green())
                                 await ctx.send(embed=emb4)
                                 await asyncio.sleep(3)
-                                return await ctx.channel.purge(limit=2)
+                                await ctx.channel.purge(limit=2)
                             else:
                                 emb = discord.Embed(title='Certo!',
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
@@ -275,7 +275,7 @@ class Role(commands.Cog, name='Cargos'):
                                                 color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
                             await asyncio.sleep(3)
-                            return await ctx.channel.purge(limit=2)
+                            await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
                         await ctx.author.add_roles(nRole)
@@ -293,22 +293,22 @@ class Role(commands.Cog, name='Cargos'):
                                     color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
                 await asyncio.sleep(3)
-                return await ctx.channel.purge(limit=2)
+                await ctx.channel.purge(limit=2)
                 
         elif isinstance(error, commands.MaxConcurrencyReached):
             await ctx.send("Já tem uma história na fila, você deve aguardar a sua vez.")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.BotMissingPermissions):
             await ctx.send("Parece que eu não tenho permissão para isso!")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.MissingPermissions):
             await ctx.send("Parece que você não tenho permissão para isso!")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.CheckFailure):
-            return await ctx.send(error)
+            await ctx.send(error)
             
     @guild_only()         
     @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
@@ -331,7 +331,7 @@ class Role(commands.Cog, name='Cargos'):
                 pass
         else:
             await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-            return
+            
         #nomeRole = discord.utils.get(ctx.guild.roles, name=role)
         emb = discord.Embed(title='Tem certeza?',
                             description='Deseja realmente remover de {}?'.format(member.mention),
@@ -363,7 +363,7 @@ class Role(commands.Cog, name='Cargos'):
                     emb2 = discord.Embed(title='História removida!',
                                         description='Espero que não se arrependa...',
                                         color=discord.Color.green())
-                    return await ctx.send('',embed=emb2)
+                    await ctx.send('',embed=emb2)
                     
                 except asyncio.TimeoutError:
                     emb3 = discord.Embed(title='Certo!',
@@ -378,28 +378,28 @@ class Role(commands.Cog, name='Cargos'):
                                     color=discord.Color.blurple())
                 await ctx.send('',embed=emb)
                 await asyncio.sleep(3)
-                return await ctx.channel.purge(limit=2)
+                await ctx.channel.purge(limit=2)
         except asyncio.TimeoutError:
             await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
             await asyncio.sleep(3)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
     
     @r.error
     async def r_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("Você não tem permissão para usar este comando!")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.BadArgument):
             await ctx.send("Parece que essa história não existe!")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.BotMissingPermissions):
             await ctx.send("Parece que eu não tenho permissão para isso!")
             await asyncio.sleep(2)
-            return await ctx.channel.purge(limit=2)
+            await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.CheckFailure):
-            return await ctx.send(error)
+            await ctx.send(error)
         
 
 def setup(client):
