@@ -82,7 +82,7 @@ class Role(commands.Cog, name='Cargos'):
                         await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                         await member.add_roles(autorRole)
                         emb4 = discord.Embed(title='Adicionado!',
-                                            description='O cargo {} foi adicionado, e agora você é autor!.'.format(autorRole.mention, 
+                                            description='O cargo {} foi adicionado, e agora você é autor!.'.format(autorRole.mention), 
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb4)
                     except asyncio.TimeoutError:
