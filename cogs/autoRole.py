@@ -219,9 +219,8 @@ class Role(commands.Cog, name='Cargos'):
                         await member.add_roles(nRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb6 = discord.Embed(title='Criado!',
-                                            description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(member.mention, 
-                                                                                                                                                            nRole.mention, 
-                                                                                                                                                            channel.mention),
+                                            description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(member.mention, 
+                                                                                                                      nRole.mention),
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb6)
                 else:
@@ -255,10 +254,8 @@ class Role(commands.Cog, name='Cargos'):
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
                                     await member.add_roles(aRole)
-                                    channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                                     emb4 = discord.Embed(title='Adicionado!',
-                                                        description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, 
-                                                                                                                                                    channel),
+                                                        description='O cargo {} foi adicionado, e agora você é autor!'.format(aRole),
                                                         color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                                     await ctx.send('',embed=emb4)
                                 except asyncio.TimeoutError:
@@ -278,11 +275,9 @@ class Role(commands.Cog, name='Cargos'):
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
                         await ctx.author.add_roles(nRole)
-                        channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb6 = discord.Embed(title='Criado!',
-                                            description='{}, o cargo **{}** foi criado, e agora você é autor! \n Leia o canal {} para saber mais.'.format(ctx.author.mention, 
-                                                                                                                                                            nRole.mention, 
-                                                                                                                                                            channel.mention),
+                                            description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(ctx.author.mention, 
+                                                                                                                      nRole.mention),
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
                         await ctx.send('',embed=emb6)
                         
