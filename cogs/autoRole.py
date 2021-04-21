@@ -97,7 +97,7 @@ class Role(commands.Cog, name='Cargos'):
                                     description='Eu não recebi uma confirmação, que tal tentar de novo?.',
                                     color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
-                await asyncio.sleep(3)
+                await asyncio.sleep(1)
                 await ctx.channel.purge(limit=2)
         else:
             return
@@ -213,7 +213,7 @@ class Role(commands.Cog, name='Cargos'):
                                                 description='Eu não recebi uma confirmação, que tal tentar de novo?.',
                                                 color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
-                            await asyncio.sleep(3)
+                            await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
@@ -242,7 +242,7 @@ class Role(commands.Cog, name='Cargos'):
                                                     color=discord.Color.green())
                                 await ctx.send(embed=emb4)
                                 await asyncio.sleep(3)
-                                await ctx.channel.purge(limit=2)
+                                await msg.delete()
                             else:
                                 emb = discord.Embed(title='Certo!',
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem!'.format(aRole),
@@ -271,7 +271,7 @@ class Role(commands.Cog, name='Cargos'):
                                                 description='Eu não recebi uma confirmação, que tal tentar de novo?.',
                                                 color=discord.Color.blurple())
                             await ctx.send('',embed=emb5)
-                            await asyncio.sleep(3)
+                            await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
