@@ -53,7 +53,7 @@ async def feed():
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send('Olha, eu chuto que esse comando não exite...')
+        await ctx.send('Olha, eu chuto que esse comando não existe...')
 
 @client.command()
 @commands.is_owner()
