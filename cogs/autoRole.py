@@ -72,7 +72,7 @@ class Role(commands.Cog, name='Cargos'):
                 else:
                     emb = discord.Embed(title='Certo!',
                                         description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(autorRole.mention),
-                                        color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                        color=discord.Color.orange())
                     msg = await ctx.send('',embed=emb)
                     await msg.add_reaction('✔')
                     def check_add(reaction, member):
@@ -90,7 +90,7 @@ class Role(commands.Cog, name='Cargos'):
                                             description='Eu não recebi uma confirmação de nenhum ademir, que tal tentar de novo?',color=discord.Color.blurple())
                         await ctx.send('',embed=emb5)
                         await asyncio.sleep(3)
-                        await ctx.channel.purge(limit=2)
+                        await msg.delete()
             except asyncio.TimeoutError:
                 emb5 = discord.Embed(title='Hum...',
                                     description='Eu não recebi uma confirmação, que tal tentar de novo?.',
@@ -152,7 +152,7 @@ class Role(commands.Cog, name='Cargos'):
                 
             emb = discord.Embed(title='Opa!',
                                 description='O cargo **{}** será criado assim que algum ademir reagir à essa mensagem!'.format(a_clean),
-                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                color=discord.Color.orange())
             msg = await ctx.send('',embed=emb)
             await msg.add_reaction('✔')
             await asyncio.sleep(1)
@@ -185,7 +185,7 @@ class Role(commands.Cog, name='Cargos'):
                             else:
                                 emb = discord.Embed(title='Certo!',
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
-                                                    color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                                    color=discord.Color.orange())
                                 msg = await ctx.send('',embed=emb)
                                 await msg.add_reaction('✔')
                                 def check_add(reaction, member):
@@ -206,7 +206,7 @@ class Role(commands.Cog, name='Cargos'):
                                                         color=discord.Color.blurple())
                                     await ctx.send('',embed=emb5)
                                     await asyncio.sleep(3)
-                                    await ctx.channel.purge(limit=2)
+                                    await msg.delete()
                         except asyncio.TimeoutError:
                             emb5 = discord.Embed(title='Hum...',
                                                 description='Eu não recebi uma confirmação, que tal tentar de novo?.',
@@ -244,8 +244,8 @@ class Role(commands.Cog, name='Cargos'):
                                 await ctx.channel.purge(limit=2)
                             else:
                                 emb = discord.Embed(title='Certo!',
-                                                    description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
-                                                    color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
+                                                    description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem!'.format(aRole),
+                                                    color=discord.Color.orange())
                                 msg = await ctx.send('',embed=emb)
                                 await msg.add_reaction('✔')
                                 def check_add(reaction, member):
@@ -264,7 +264,7 @@ class Role(commands.Cog, name='Cargos'):
                                                         color=discord.Color.blurple())
                                     await ctx.send('',embed=emb5)
                                     await asyncio.sleep(3)
-                                    await ctx.channel.purge(limit=2)
+                                    await msg.delete()
                         except asyncio.TimeoutError:
                             emb5 = discord.Embed(title='Hum...',
                                                 description='Eu não recebi uma confirmação, que tal tentar de novo?.',
@@ -287,7 +287,7 @@ class Role(commands.Cog, name='Cargos'):
                                     color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
                 await asyncio.sleep(3)
-                await ctx.channel.purge(limit=2)
+                await msg.delete()
                 
         elif isinstance(error, commands.MaxConcurrencyReached):
             await ctx.send("Já tem uma história na fila, você deve aguardar a sua vez.")
