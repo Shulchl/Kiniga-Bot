@@ -34,13 +34,14 @@ class Role(commands.Cog, name='Cargos'):
             member = member or ctx.author
             role_id = role.id
             autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
+            eqpRole = discord.utils.get(ctx.guild.roles, name="Equipe")
             emb = discord.Embed(title='Opa!',
                                 description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(autorRole.mention),
                                 color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
             msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✔')
+            await msg.add_reaction('✅')
             def check_ask(reaction, member):
-                return member == ctx.author and str(reaction.emoji) == '✔'
+                return member == ctx.author and str(reaction.emoji) == '✅'
 
             try:
                 await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
@@ -74,9 +75,9 @@ class Role(commands.Cog, name='Cargos'):
                                         description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(autorRole.mention),
                                         color=discord.Color.orange())
                     msg = await ctx.send('',embed=emb)
-                    await msg.add_reaction('✔')
+                    await msg.add_reaction('✅')
                     def check_add(reaction, member):
-                        return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
+                        return eqpRole in member.roles and str(reaction.emoji) == '✅'
 
                     try:
                         await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
@@ -104,7 +105,7 @@ class Role(commands.Cog, name='Cargos'):
     @projeto.error
     async def projeto_error(self, ctx, error):
         if isinstance(error, commands.RoleNotFound):
-            
+            eqpRole = discord.utils.get(ctx.guild.roles, name="Equipe")
             #split the message into words
             string = str(ctx.message.content)
             temp = string.split()
@@ -154,10 +155,10 @@ class Role(commands.Cog, name='Cargos'):
                                 description='O cargo **{}** será criado assim que algum ademir reagir à essa mensagem!'.format(a_clean),
                                 color=discord.Color.orange())
             msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✔')
+            await msg.add_reaction('✅')
             await asyncio.sleep(1)
             def check_create(reaction, member):
-                return member.guild_permissions.manage_channels and reaction.message.id == msg.id and str(reaction.emoji) == '✔'
+                return eqpRole in member.roles and reaction.message.id == msg.id and str(reaction.emoji) == '✅'
             try:
                 await self.client.wait_for('reaction_add',timeout=60.0, check=check_create)
                 if user:
@@ -166,9 +167,9 @@ class Role(commands.Cog, name='Cargos'):
                                             description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),
                                             color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                         msg = await ctx.send('',embed=emb)
-                        await msg.add_reaction('✔')
+                        await msg.add_reaction('✅')
                         def check_ask(reaction, member):
-                            return member == ctx.author and str(reaction.emoji) == '✔'
+                            return member == ctx.author and str(reaction.emoji) == '✅'
                             
                         try:
                             await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
@@ -187,9 +188,9 @@ class Role(commands.Cog, name='Cargos'):
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem! 1'.format(aRole),
                                                     color=discord.Color.orange())
                                 msg = await ctx.send('',embed=emb)
-                                await msg.add_reaction('✔')
+                                await msg.add_reaction('✅')
                                 def check_add(reaction, member):
-                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
+                                    return eqpRole in member.roles and str(reaction.emoji) == '✅'
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
@@ -229,9 +230,9 @@ class Role(commands.Cog, name='Cargos'):
                                             description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(aRole),
                                             color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
                         msg = await ctx.send('',embed=emb)
-                        await msg.add_reaction('✔')
+                        await msg.add_reaction('✅')
                         def check_ask(reaction, member):
-                            return member == ctx.author and str(reaction.emoji) == '✔'
+                            return member == ctx.author and str(reaction.emoji) == '✅'
                             
                         try:
                             await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
@@ -247,9 +248,9 @@ class Role(commands.Cog, name='Cargos'):
                                                     description='O cargo **{}** será recebido assim que algum ademir reagir à essa mensagem!'.format(aRole),
                                                     color=discord.Color.orange())
                                 msg = await ctx.send('',embed=emb)
-                                await msg.add_reaction('✔')
+                                await msg.add_reaction('✅')
                                 def check_add(reaction, member):
-                                    return member == ctx.guild.me.guild_permissions.manage_roles and str(reaction.emoji) == '✔'
+                                    return eqpRole in member.roles and str(reaction.emoji) == '✅'
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
@@ -333,10 +334,10 @@ class Role(commands.Cog, name='Cargos'):
                                 description='Deseja realmente remover de {}?'.format(member.mention),
                                 color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
             msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✔')
+            await msg.add_reaction('✅')
 
             def check(reaction, member):
-                return member == ctx.author and str(reaction.emoji) == '✔'
+                return member == ctx.author and str(reaction.emoji) == '✅'
 
             try:
                 await self.client.wait_for('reaction_add',timeout=20.0, check=check)
@@ -346,10 +347,10 @@ class Role(commands.Cog, name='Cargos'):
                                         description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',
                                         color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
                     msg = await ctx.send('',embed=emb)
-                    await msg.add_reaction('✔')
+                    await msg.add_reaction('✅')
 
                     def check_delete(reaction, member):
-                        return member == ctx.author and str(reaction.emoji) == '✔'
+                        return member == ctx.author and str(reaction.emoji) == '✅'
 
                     try:
                         await self.client.wait_for('reaction_add',timeout=10.0, check=check_delete)
