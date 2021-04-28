@@ -28,7 +28,7 @@ class Role(commands.Cog, name='Cargos'):
 ### EDIT ROLE COLOR
         
     @guild_only()
-    @commands.command(name='projeto', help='Recebe um determinado cargo ao digitar `.projeto <história> <usuário>` __(campo usuário é opcional)__ ')
+    @commands.command(name='edit', help='Recebe um determinado cargo ao digitar `.edit <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
