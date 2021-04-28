@@ -24,12 +24,77 @@ class Role(commands.Cog, name='Cargos'):
     async def on_ready(self):
         print('Categoria de Cargos funcionando!       [√]')
 
+    ### TURN INTO AUTHOR
+
+    @guild_only()         
+    @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
+    @commands.has_permissions(manage_roles=True)
+    async def autor(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
+        channel = ctx.guild.get_channel(831561655329751062)
+        if ctx.message.channel == channel:
+            member = member or ctx.author
+
+            creatorRole = discord.utils.get(ctx.guild.roles, id=675027763412860969)
+            autorRole   = discord.utils.get(ctx.guild.roles, id=667838759307575313)
+            markRole    = discord.utils.get(ctx.guild.roles, id=837025056554090517)
+            emb = discord.Embed(title='Tem certeza?',
+                                description='Desejar tornar {} um autor?'.format(member.mention),
+                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
+            msg = await ctx.send('',embed=emb)
+            await msg.add_reaction('✅')
+
+            def check(reaction, member):
+                return member == ctx.author and str(reaction.emoji) == '✅'
+
+            try:
+                await self.client.wait_for('reaction_add',timeout=20.0, check=check)
+                for creatorRole in member.roles:
+                    emb = discord.Embed(title='Hum...',
+                                        description='Parece que o usuário já é autor.',
+                                        color=discord.Color.blurple())
+                    em = await ctx.send('',embed=emb)
+                    await ctx.send(em)
+                    await asyncio.sleep(5)
+                    msg.delete()
+                    em.delete()
+                else:
+                    member.add_roles(creatorRole, autorRole, markRole)
+                    emb = discord.Embed(title='Parabéns!!',
+                                        description='Agora você é autor, {}! Por favor, leia o fixado para saber como receber a TAG da sua história.'.format(member.mention),
+                                        color=discord.Color.blurple())
+                    await ctx.send('',embed=emb)
+            except asyncio.TimeoutError:
+                confirm = await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
+                msg.delete()
+                confirm.delete()
+        else: return
+    
+    @autor.error
+    async def autor_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("Você não tem permissão para usar este comando!")
+            await asyncio.sleep(2)
+            await ctx.channel.purge(limit=2)
+        elif isinstance(error, commands.BadArgument):
+            await ctx.send("Parece que essa história não existe!")
+            await asyncio.sleep(2)
+            await ctx.channel.purge(limit=2)
+        elif isinstance(error, commands.BotMissingPermissions):
+            await ctx.send("Parece que eu não tenho permissão para isso!")
+            await asyncio.sleep(2)
+            await ctx.channel.purge(limit=2)
+        elif isinstance(error, commands.CheckFailure):
+            await ctx.send(error)
+
+#### GET PROJECT ROLE
+
     @guild_only()
     @commands.command(name='projeto', help='Recebe um determinado cargo ao digitar `.projeto <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def projeto(self, ctx, role: discord.Role, member: discord.Member = None):
         channel = ctx.guild.get_channel(831561655329751062)
+        markAuthorRole    = discord.utils.get(ctx.guild.roles, id=837020515004317707)
         if ctx.message.channel == channel:
             member = member or ctx.author
             role_id = role.id
@@ -81,7 +146,7 @@ class Role(commands.Cog, name='Cargos'):
 
                     try:
                         await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
-                        await member.add_roles(autorRole)
+                        await member.add_roles(autorRole, markAuthorRole)
                         emb4 = discord.Embed(title='Adicionado!',
                                             description='O cargo {} foi adicionado, e agora você é autor!.'.format(autorRole.mention), 
                                             color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
@@ -94,7 +159,7 @@ class Role(commands.Cog, name='Cargos'):
                         await msg.delete()
             except asyncio.TimeoutError:
                 emb5 = discord.Embed(title='Hum...',
-                                    description='Eu não recebi uma confirmação, que tal tentar de novo?.',
+                                    description='Eu não recebi uma confirmação, que tal tentar de novo?',
                                     color=discord.Color.blurple())
                 await ctx.send('',embed=emb5)
                 await asyncio.sleep(1)
@@ -106,6 +171,7 @@ class Role(commands.Cog, name='Cargos'):
     async def projeto_error(self, ctx, error):
         if isinstance(error, commands.RoleNotFound):
             eqpRole = discord.utils.get(ctx.guild.roles, name="Equipe")
+            markAuthorRole    = discord.utils.get(ctx.guild.roles, id=837020515004317707)
             #split the message into words
             string = str(ctx.message.content)
             temp = string.split()
@@ -194,7 +260,7 @@ class Role(commands.Cog, name='Cargos'):
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
-                                    await member.add_roles(aRole)
+                                    await member.add_roles(aRole, markAuthorRole)
                                     channel = discord.utils.get(self.client.get_all_channels(), guild__name='Kiniga Brasil', name='regras')
                                     emb4 = discord.Embed(title='Adicionado!',
                                                         description='O cargo {} foi adicionado, e agora você é autor! \n Leia o canal {}.'.format(aRole, 
@@ -217,7 +283,7 @@ class Role(commands.Cog, name='Cargos'):
                             await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
-                        await member.add_roles(nRole)
+                        await member.add_roles(nRole, markAuthorRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb6 = discord.Embed(title='Criado!',
                                             description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(member.mention, 
@@ -254,7 +320,7 @@ class Role(commands.Cog, name='Cargos'):
                                 
                                 try:
                                     await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
-                                    await member.add_roles(aRole)
+                                    await member.add_roles(aRole, markAuthorRole)
                                     emb4 = discord.Embed(title='Adicionado!',
                                                         description='O cargo {} foi adicionado, e agora você é autor!'.format(aRole),
                                                         color=discord.Color.green()).set_footer(text='Espero que seja muito produtivo escrevendo!')
@@ -275,7 +341,7 @@ class Role(commands.Cog, name='Cargos'):
                             await ctx.channel.purge(limit=2)
                     else:
                         nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
-                        await ctx.author.add_roles(nRole)
+                        await ctx.author.add_roles(nRole, markAuthorRole)
                         emb6 = discord.Embed(title='Criado!',
                                             description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(ctx.author.mention, 
                                                                                                                       nRole.mention),
@@ -304,7 +370,9 @@ class Role(commands.Cog, name='Cargos'):
             await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.CheckFailure):
             await ctx.send(error)
-            
+
+### REMOVE PROJECT ROLE
+  
     @guild_only()         
     @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
     @commands.has_permissions(manage_roles=True)
