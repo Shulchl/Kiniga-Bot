@@ -37,7 +37,7 @@ class Role(commands.Cog, name='Cargos'):
             return await ctx.send("Não é possivel alterar isso!")
         else:   
         
-            for autorRole in ctx.author.autorRoles:
+            for autorRole in ctx.author.roles:
                 await autorRole.edit(colour = colour)
                 if name != None:
                     await autorRole.edit(name = name)
