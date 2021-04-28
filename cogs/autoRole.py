@@ -32,17 +32,18 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
-        if role.is_default():
+        autorRole = role
+        if autorRole.is_default():
             return await ctx.send("Não é possivel alterar isso!")
         else:   
         
-            for role in ctx.author.roles:
-                await role.edit(colour = colour)
+            for autorRole in ctx.author.autorRoles:
+                await autorRole.edit(colour = colour)
                 if name != None:
-                    await role.edit(name = name)
+                    await autorRole.edit(name = name)
 
                 embed = discord.Embed(
-                    description = (f'As mudanças em {role.name} foram aplicadas.'),
+                    description = (f'As mudanças em {autorRole.name} foram aplicadas.'),
                     colour = colour
                 ) 
                 return await ctx.send(embed=embed)
