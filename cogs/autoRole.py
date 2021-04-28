@@ -55,8 +55,8 @@ class Role(commands.Cog, name='Cargos'):
                     em = await ctx.send('',embed=emb)
                     await ctx.send(em)
                     await asyncio.sleep(5)
-                    msg.delete()
-                    em.delete()
+                    await msg.delete()
+                    await em.delete()
                 else:
                     member.add_roles(creatorRole, autorRole, markRole)
                     emb = discord.Embed(title='Parabéns!!',
@@ -65,8 +65,8 @@ class Role(commands.Cog, name='Cargos'):
                     await ctx.send('',embed=emb)
             except asyncio.TimeoutError:
                 confirm = await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
-                msg.delete()
-                confirm.delete()
+                await msg.delete()
+                await confirm.delete()
         else: return
     
     @autor.error
