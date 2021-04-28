@@ -42,8 +42,8 @@ class Role(commands.Cog, name='Cargos'):
             #a = str(role)
             #a = a.replace('"', '')
             #a_clean = a
-            role_guild = discord.utils.get(ctx.guild.roles, name=role.name)
-            if role_guild:
+            #role_guild = discord.utils.get(ctx.guild.roles, name=role.name)
+            if role:
                 pass
             else:
                 msg = await ctx.send("Você não pode mudar o que não existe.")
@@ -52,13 +52,13 @@ class Role(commands.Cog, name='Cargos'):
                 return await ctx.message.delete()
                 
         
-            for role_guild in ctx.author.roles:
-                await role_guild.edit(colour = colour)
+            for role in ctx.author.roles:
+                await role.edit(colour = colour)
                 if name != None:
-                    await role_guild.edit(name = name)
+                    await role.edit(name = name)
 
                 embed = discord.Embed(
-                    description = (f'As mudanças em {role_guild} foram aplicadas.'),
+                    description = (f'As mudanças em {role.name} foram aplicadas.'),
                     colour = colour
                 ) 
                 return await ctx.send(embed=embed)
