@@ -35,14 +35,14 @@ class Role(commands.Cog, name='Cargos'):
         if role.is_default():
             return await ctx.send("Não é possivel alterar isso!")
         else:
-            roleid = role.id
-            autorRole = discord.utils.get(ctx.guild.roles, id=roleid)
-            aRole = []
-            a_clean = []
-            a = str(role)
-            a = a.replace('"', '')
-            a_clean = a
-            role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
+            #roleid = role.id
+            #autorRole = discord.utils.get(ctx.guild.roles, id=roleid)
+            #aRole = []
+            #a_clean = []
+            #a = str(role)
+            #a = a.replace('"', '')
+            #a_clean = a
+            role_guild = discord.utils.get(ctx.guild.roles, name=role.name)
             if role_guild:
                 role_id = ctx.guild.get_role(int(role_guild.id))
                 aRole = role_id
@@ -54,39 +54,23 @@ class Role(commands.Cog, name='Cargos'):
                 await msg.delete()
                 return await ctx.message.delete()
                 
-            
-            if aRole:
-                for aRole in ctx.author.roles:
-                    await aRole.edit(colour = colour)
-                    if name != None:
-                        await aRole.edit(name = name)
+        
+            for aRole in ctx.author.roles:
+                await aRole.edit(colour = colour)
+                if name != None:
+                    await aRole.edit(name = name)
 
-                    embed = discord.Embed(
-                        description = (f'As mudanças em {aRole} foram aplicadas.1'),
-                        colour = colour
-                    ) 
-                    return await ctx.send(embed=embed)
-                else:
-                    msg = await ctx.send("Você não pode editar uma tag que não possui.")
-                    await asyncio.sleep(5)
-                    await msg.delete()
-                    await ctx.message.delete()
+                embed = discord.Embed(
+                    description = (f'As mudanças em {aRole} foram aplicadas.1'),
+                    colour = colour
+                ) 
+                return await ctx.send(embed=embed)
             else:
-                for autorRole in ctx.author.roles:
-                    await autorRole.edit(colour = colour)
-                    if name != None:
-                        await autorRole.edit(name = name)
+                msg = await ctx.send("Você não pode editar uma tag que não possui.")
+                await asyncio.sleep(5)
+                await msg.delete()
+                await ctx.message.delete()
 
-                    embed = discord.Embed(
-                        description = (f'As mudanças em {autorRole} foram aplicadas.2'),
-                        colour = colour
-                    ) 
-                    return await ctx.send(embed=embed)
-                else:
-                    msg = await ctx.send("Você não pode editar uma tag que não possui.")
-                    await asyncio.sleep(5)
-                    await msg.delete()
-                    await ctx.message.delete()
 
 #### GET PROJECT ROLE
 
