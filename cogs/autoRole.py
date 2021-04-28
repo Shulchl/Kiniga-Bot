@@ -35,7 +35,7 @@ class Role(commands.Cog, name='Cargos'):
         temp = ctx.message.content.split()
         role = ' '.join(word for word in ctx.message.content if not word.startswith('.') and not word.startswith('#')) #Cargo
         aRole = []
-        a = str(temp)
+        a = str(role)
         a = a.replace('"', '')
         a_clean = a
         role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
