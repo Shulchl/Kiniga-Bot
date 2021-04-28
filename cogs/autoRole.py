@@ -44,9 +44,7 @@ class Role(commands.Cog, name='Cargos'):
             #a_clean = a
             role_guild = discord.utils.get(ctx.guild.roles, name=role.name)
             if role_guild:
-                role_id = ctx.guild.get_role(int(role_guild.id))
-                aRole = role_id
-                await ctx.send(f"{aRole}")
+                pass
             else:
                 msg = await ctx.send("Você não pode mudar o que não existe.")
                 await asyncio.sleep(5)
