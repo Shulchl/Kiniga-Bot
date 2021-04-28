@@ -34,23 +34,7 @@ class Role(commands.Cog, name='Cargos'):
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
         if role.is_default():
             return await ctx.send("Não é possivel alterar isso!")
-        else:
-            #roleid = role.id
-            #autorRole = discord.utils.get(ctx.guild.roles, id=roleid)
-            #aRole = []
-            #a_clean = []
-            #a = str(role)
-            #a = a.replace('"', '')
-            #a_clean = a
-            #role_guild = discord.utils.get(ctx.guild.roles, name=role.name)
-            if role:
-                pass
-            else:
-                msg = await ctx.send("Você não pode mudar o que não existe.")
-                await asyncio.sleep(5)
-                await msg.delete()
-                return await ctx.message.delete()
-                
+        else:   
         
             for role in ctx.author.roles:
                 await role.edit(colour = colour)
