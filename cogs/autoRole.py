@@ -34,7 +34,7 @@ class Role(commands.Cog, name='Cargos'):
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
         temp = ctx.message.content
         del temp[0]
-        role = ' '.join(word for word in temp if not word.startswith('#')) #Cargo
+        colour = ' '.join(word for word in temp if not word.startswith('#')) #Cargo
         print(temp[1])
         aRole = []
         a = str(role)
