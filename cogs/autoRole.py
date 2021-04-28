@@ -27,7 +27,7 @@ class Role(commands.Cog, name='Cargos'):
     ### TURN INTO AUTHOR
 
     @guild_only()         
-    @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
+    @commands.command(name='autor', help='Deletar história ao digitar `.autor <cargo> <usuário>` __(campo usuário é opcional)__ ')
     @commands.has_permissions(manage_roles=True)
     async def autor(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
         channel = ctx.guild.get_channel(831561655329751062)
