@@ -24,67 +24,29 @@ class Role(commands.Cog, name='Cargos'):
     async def on_ready(self):
         print('Categoria de Cargos funcionando!       [√]')
 
-    ### TURN INTO AUTHOR
 
-    @guild_only()         
-    @commands.command(name='autor', help='Deletar história ao digitar `.autor <cargo> <usuário>` __(campo usuário é opcional)__ ')
-    @commands.has_permissions(manage_roles=True)
-    async def autor(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
-        channel = ctx.guild.get_channel(831561655329751062)
-        if ctx.message.channel == channel:
-            member = member or ctx.author
+### EDIT ROLE COLOR
+        
+    @guild_only()
+    @commands.command(name='projeto', help='Recebe um determinado cargo ao digitar `.projeto <história> <usuário>` __(campo usuário é opcional)__ ')
+    @commands.max_concurrency(1, per=BucketType.default, wait=False)
+    @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
+    async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
+        for role in ctx.author.roles:
+            await role.edit(colour = colour)
+            if name != None:
+                await role.edit(name = name)
 
-            creatorRole = discord.utils.get(ctx.guild.roles, id=675027763412860969)
-            autorRole   = discord.utils.get(ctx.guild.roles, id=667838759307575313)
-            markRole    = discord.utils.get(ctx.guild.roles, id=837025056554090517)
-            emb = discord.Embed(title='Tem certeza?',
-                                description='Desejar tornar {} um autor?'.format(member.mention),
-                                color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')
-            msg = await ctx.send('',embed=emb)
-            await msg.add_reaction('✅')
-
-            def check(reaction, member):
-                return member == ctx.author and str(reaction.emoji) == '✅'
-
-            try:
-                await self.client.wait_for('reaction_add',timeout=20.0, check=check)
-                for creatorRole in member.roles:
-                    emb = discord.Embed(title='Hum...',
-                                        description='Parece que o usuário já é autor.',
-                                        color=discord.Color.blurple())
-                    em = await ctx.send('',embed=emb)
-                    await asyncio.sleep(5)
-                    await msg.delete()
-                    await em.delete()
-                else:
-                    roles = [creatorRole, autorRole, markRole]
-                    member.add_roles(roles)
-                    emb = discord.Embed(title='Parabéns!!',
-                                        description='Agora você é autor, {}! Por favor, leia o fixado para saber como receber a TAG da sua história.'.format(member.mention),
-                                        color=discord.Color.blurple())
-                    await ctx.send('',embed=emb)
-            except asyncio.TimeoutError:
-                confirm = await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
-                await msg.delete()
-                await confirm.delete()
-        else: return
-    
-    @autor.error
-    async def autor_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            msg = await ctx.send("Você não tem permissão para usar este comando!")
-            await asyncio.sleep(2)
+            embed = discord.Embed(
+                description = (f'The changes for role {role} have been applied.'),
+                colour = colour
+            ) 
+            await ctx.send(embed=embed)
+        else:
+            msg = await ctx.send("Você não pode editar uma tag que não possui.")
+            await asyncio.sleep(5)
             await msg.delete()
-        elif isinstance(error, commands.BadArgument):
-            msg = await ctx.send("Parece que essa história não existe!")
-            await asyncio.sleep(2)
-            await msg.delete()
-        elif isinstance(error, commands.BotMissingPermissions):
-            msg = await ctx.send("Parece que eu não tenho permissão para isso!")
-            await asyncio.sleep(2)
-            await msg.delete()
-        elif isinstance(error, commands.CheckFailure):
-            await ctx.send(error)
+            await ctx.message.delete()
 
 #### GET PROJECT ROLE
 
