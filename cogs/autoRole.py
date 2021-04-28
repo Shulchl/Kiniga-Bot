@@ -32,29 +32,20 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
-        temp = ctx.message.content.split()
-        role = ' '.join(word for word in ctx.message.content if not word.startswith('.') and not word.startswith('#')) #Cargo
-        aRole = []
-        a = str(role)
-        a = a.replace('"', '')
-        a_clean = a
-        role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
-        if role_guild:
-            role_id = ctx.guild.get_role(int(role_guild.id))
-            aRole = role_id
-        else:
+        if not role:
             msg = await ctx.send("Você não pode mudar o que não existe.")
             await asyncio.sleep(5)
             await msg.delete()
             await ctx.message.delete()
-            
-        for aRole in ctx.author.roles:
-            await aRole.edit(colour = colour)
+            return
+        
+        for role in ctx.author.roles:
+            await role.edit(colour = colour)
             if name != None:
-                await aRole.edit(name = name)
+                await role.edit(name = name)
 
             embed = discord.Embed(
-                description = (f'As mudanças em {aRole} foram aplicadas.'),
+                description = (f'As mudanças em {role} foram aplicadas.'),
                 colour = colour
             ) 
             await ctx.send(embed=embed)
