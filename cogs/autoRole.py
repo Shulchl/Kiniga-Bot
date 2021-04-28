@@ -31,9 +31,10 @@ class Role(commands.Cog, name='Cargos'):
     @commands.command(name='edit', help='Recebe um determinado cargo ao digitar `.edit <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
-    async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
-        role_id = role.id
+    async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
+        role_id = role[0].id
         autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
+        await ctx.send(autorRole)
         if not autorRole:
             msg = await ctx.send("Você não pode mudar o que não existe.")
             await asyncio.sleep(5)
@@ -253,7 +254,7 @@ class Role(commands.Cog, name='Cargos'):
                             await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
-                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
+                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!", mentionable=True)
                         await member.add_roles(nRole, markAuthorRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb6 = discord.Embed(title='Criado!',
@@ -311,7 +312,7 @@ class Role(commands.Cog, name='Cargos'):
                             await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
-                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
+                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!", mentionable=True)
                         await ctx.author.add_roles(nRole, markAuthorRole)
                         emb6 = discord.Embed(title='Criado!',
                                             description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(ctx.author.mention, 
