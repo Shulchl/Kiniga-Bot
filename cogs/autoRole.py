@@ -33,10 +33,10 @@ class Role(commands.Cog, name='Cargos'):
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
         if role.is_default():
-            await ctx.send("Não é possivel alterar isso!")
+            return await ctx.send("Não é possivel alterar isso!")
         else:
-            role_id = role.id
-            autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
+            roleid = role.id
+            autorRole = discord.utils.get(ctx.guild.roles, id=roleid)
             aRole = []
             a_clean = []
             a = str(role)
@@ -46,14 +46,14 @@ class Role(commands.Cog, name='Cargos'):
             if role_guild:
                 role_id = ctx.guild.get_role(int(role_guild.id))
                 aRole = role_id
-                await ctx.send(aRole)
+                await ctx.send(f"{aRole} 1")
             else:
-                await ctx.send(a_clean)
+                await ctx.send(f"{a_clean} 2")
                 msg = await ctx.send("Você não pode mudar o que não existe.")
                 await asyncio.sleep(5)
                 await msg.delete()
-                await ctx.message.delete()
-                return
+                return await ctx.message.delete()
+                
             
             if aRole:
                 for aRole in ctx.author.roles:
@@ -62,10 +62,10 @@ class Role(commands.Cog, name='Cargos'):
                         await aRole.edit(name = name)
 
                     embed = discord.Embed(
-                        description = (f'As mudanças em {aRole} foram aplicadas.'),
+                        description = (f'As mudanças em {aRole} foram aplicadas.1'),
                         colour = colour
                     ) 
-                    await ctx.send(embed=embed)
+                    return await ctx.send(embed=embed)
                 else:
                     msg = await ctx.send("Você não pode editar uma tag que não possui.")
                     await asyncio.sleep(5)
@@ -78,10 +78,10 @@ class Role(commands.Cog, name='Cargos'):
                         await autorRole.edit(name = name)
 
                     embed = discord.Embed(
-                        description = (f'As mudanças em {autorRole} foram aplicadas.'),
+                        description = (f'As mudanças em {autorRole} foram aplicadas.2'),
                         colour = colour
                     ) 
-                    await ctx.send(embed=embed)
+                    return await ctx.send(embed=embed)
                 else:
                     msg = await ctx.send("Você não pode editar uma tag que não possui.")
                     await asyncio.sleep(5)
