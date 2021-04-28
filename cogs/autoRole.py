@@ -52,13 +52,13 @@ class Role(commands.Cog, name='Cargos'):
                 return await ctx.message.delete()
                 
         
-            for aRole in ctx.author.roles:
-                await aRole.edit(colour = colour)
+            for role_guild in ctx.author.roles:
+                await role_guild.edit(colour = colour)
                 if name != None:
-                    await aRole.edit(name = name)
+                    await role_guild.edit(name = name)
 
                 embed = discord.Embed(
-                    description = (f'As mudanças em {aRole} foram aplicadas.1'),
+                    description = (f'As mudanças em {role_guild} foram aplicadas.'),
                     colour = colour
                 ) 
                 return await ctx.send(embed=embed)
