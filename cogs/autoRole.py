@@ -32,13 +32,10 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, *, name = None):
-        temp = ctx.message.content
-        del temp[0]
-        colour = ' '.join(word for word in temp if word.startswith('#')) #cor
-        role = ' '.join(word for word in temp if not word.startswith('.') and not word.startswith('#')) #Cargo
-        print(temp[1])
+        temp = ctx.message.content.split()
+        role = ' '.join(word for word in ctx.message.content if not word.startswith('.') and not word.startswith('#')) #Cargo
         aRole = []
-        a = str(role)
+        a = str(temp)
         a = a.replace('"', '')
         a_clean = a
         role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
@@ -50,6 +47,7 @@ class Role(commands.Cog, name='Cargos'):
             await asyncio.sleep(5)
             await msg.delete()
             await ctx.message.delete()
+            
         for aRole in ctx.author.roles:
             await aRole.edit(colour = colour)
             if name != None:
