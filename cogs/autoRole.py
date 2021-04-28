@@ -27,7 +27,7 @@ class Role(commands.Cog, name='Cargos'):
     ### TURN INTO AUTHOR
 
     @guild_only()         
-    @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
+    @commands.command(name='autor', help='Deletar história ao digitar `.autor <cargo> <usuário>` __(campo usuário é opcional)__ ')
     @commands.has_permissions(manage_roles=True)
     async def autor(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
         channel = ctx.guild.get_channel(831561655329751062)
@@ -53,36 +53,36 @@ class Role(commands.Cog, name='Cargos'):
                                         description='Parece que o usuário já é autor.',
                                         color=discord.Color.blurple())
                     em = await ctx.send('',embed=emb)
-                    await ctx.send(em)
                     await asyncio.sleep(5)
-                    msg.delete()
-                    em.delete()
+                    await msg.delete()
+                    await em.delete()
                 else:
-                    member.add_roles(creatorRole, autorRole, markRole)
+                    roles = [creatorRole, autorRole, markRole]
+                    member.add_roles(roles)
                     emb = discord.Embed(title='Parabéns!!',
                                         description='Agora você é autor, {}! Por favor, leia o fixado para saber como receber a TAG da sua história.'.format(member.mention),
                                         color=discord.Color.blurple())
                     await ctx.send('',embed=emb)
             except asyncio.TimeoutError:
                 confirm = await ctx.send("Eu não recebi uma confirmação, que tal tentar de novo?")
-                msg.delete()
-                confirm.delete()
+                await msg.delete()
+                await confirm.delete()
         else: return
     
     @autor.error
     async def autor_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send("Você não tem permissão para usar este comando!")
+            msg = await ctx.send("Você não tem permissão para usar este comando!")
             await asyncio.sleep(2)
-            await ctx.channel.purge(limit=2)
+            await msg.delete()
         elif isinstance(error, commands.BadArgument):
-            await ctx.send("Parece que essa história não existe!")
+            msg = await ctx.send("Parece que essa história não existe!")
             await asyncio.sleep(2)
-            await ctx.channel.purge(limit=2)
+            await msg.delete()
         elif isinstance(error, commands.BotMissingPermissions):
-            await ctx.send("Parece que eu não tenho permissão para isso!")
+            msg = await ctx.send("Parece que eu não tenho permissão para isso!")
             await asyncio.sleep(2)
-            await ctx.channel.purge(limit=2)
+            await msg.delete()
         elif isinstance(error, commands.CheckFailure):
             await ctx.send(error)
 
