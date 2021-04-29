@@ -49,15 +49,15 @@ async def feed():
                             for i, message in enumerate(messages):
                                 message = message.content
                                 if message == cont:
-                                    await asyncio.sleep(500)
+                                    await asyncio.sleep(300)
                                 else:
-                                    await channel.send(cont)
+                                    return await channel.send(cont)
                                     f = l['href']
-                                    await asyncio.sleep(500)
+                                    await asyncio.sleep(300)
                     except: 
-                        await asyncio.sleep(300)
+                        await asyncio.sleep(30)
             except:
-                await asyncio.sleep(300)
+                await asyncio.sleep(30)
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
