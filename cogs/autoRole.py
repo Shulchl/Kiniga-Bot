@@ -44,9 +44,7 @@ class Role(commands.Cog, name='Cargos'):
                 a = str(text)
                 a = a.replace('"', '')
                 a_clean = a
-                ([role.name for a_clean in guild.roles[1:]])
-                role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
-                
+                role_guild = ([role for a_clean in guild.roles[1:]])
                 if role_guild:
                     role_id = ctx.guild.get_role(int(role_guild.id))
                     aRole = role_id
@@ -54,7 +52,7 @@ class Role(commands.Cog, name='Cargos'):
                     pass
             else:
                 await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-            for aRole in :
+            for aRole in member.roles:
                 await aRole.edit(colour = colour)
                 if name != None:
                     await aRole.edit(name = name)
