@@ -36,7 +36,7 @@ async def feed():
                     try:
                         global f
                         if f == l['href']:
-                            await asyncio.sleep(300)
+                            return await asyncio.sleep(300)
                         else:
                             channel = discord.utils.get(client.get_all_channels(), 
                                                         guild__name='Kiniga Brasil', 
@@ -49,15 +49,15 @@ async def feed():
                             for i, message in enumerate(messages):
                                 message = message.content
                                 if message == cont:
-                                    await asyncio.sleep(300)
+                                    return await asyncio.sleep(300)
                                 else:
-                                    return await channel.send(cont)
+                                    await channel.send(cont)
                                     f = l['href']
                                     await asyncio.sleep(300)
                     except: 
-                        await asyncio.sleep(30)
+                        await asyncio.sleep(300)
             except:
-                await asyncio.sleep(30)
+                await asyncio.sleep(300)
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
