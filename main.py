@@ -13,7 +13,6 @@ client = commands.Bot(command_prefix = ".",
 
 client.remove_command('help')
 
-f = ''
 
 @client.event
 async def on_ready():
@@ -48,7 +47,6 @@ async def feed():
                                 await asyncio.sleep(300)
                             else:
                                 await channel.send(cont)
-                                f = l['href']
                                 await asyncio.sleep(300)
                     except: 
                         await asyncio.sleep(300)
