@@ -34,26 +34,22 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
-                        global f
-                        if f == l['href']:
-                            return await asyncio.sleep(300)
-                        else:
-                            channel = discord.utils.get(client.get_all_channels(), 
-                                                        guild__name='Kiniga Brasil', 
-                                                        name='✶⊷彡recentes')
-                            messages = await channel.history(limit=1).flatten()
-                            messages.reverse()
-                            cont = 'Saiu o **{}** de **{}**!\n{}'.format(l.get_text(),
-                                                                        t.get_text(),
-                                                                        l['href'])
-                            for i, message in enumerate(messages):
-                                message = message.content
-                                if message == cont:
-                                    return await asyncio.sleep(300)
-                                else:
-                                    await channel.send(cont)
-                                    f = l['href']
-                                    await asyncio.sleep(300)
+                        channel = discord.utils.get(client.get_all_channels(), 
+                                                    guild__name='Kiniga Brasil', 
+                                                    name='✶⊷彡recentes')
+                        messages = await channel.history(limit=1).flatten()
+                        messages.reverse()
+                        cont = 'Saiu o **{}** de **{}**!\n{}'.format(l.get_text(),
+                                                                    t.get_text(),
+                                                                    l['href'])
+                        for i, message in enumerate(messages):
+                            message = message.content
+                            if message == cont:
+                                await asyncio.sleep(300)
+                            else:
+                                await channel.send(cont)
+                                f = l['href']
+                                await asyncio.sleep(300)
                     except: 
                         await asyncio.sleep(300)
             except:
