@@ -34,7 +34,7 @@ class Role(commands.Cog, name='Cargos'):
     async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
         id_role = discord.utils.get(ctx.guild.roles, id=role.id)
         autorRole = discord.utils.get(ctx.guild.roles, id=id_role.id) 
-        creatorRole = discord.utils.get(ctx.guild.roles, name="Criador(a)")
+        creatorRole = discord.utils.get(ctx.guild.roles, name="〈▪▪▪▪▪▪▪▪▪▪▪▪Histórias▪▪▪▪▪▪▪▪▪▪▪▪〉")
         member = ctx.author
         if autorRole:
             if not autorRole.is_default() and autorRole.position < creatorRole.position:
