@@ -38,13 +38,13 @@ class Help(commands.Cog):
             #    if not y.cog_name and not y.hidden:
             #        cmds_desc += ('{} - {}'.format(y.name,y.help)+'\n')
             #halp.add_field(name='Comandos não categorizados',value=cmds_desc[0:len(cmds_desc)-1],inline=False)
-            await ctx.message.add_reaction(emoji='✉')
-            await ctx.message.author.send('',embed=halp)
+            #await ctx.message.add_reaction(emoji='✉')
+            await ctx.send('',embed=halp)
         else:
             #"""Helps me remind you if you pass too many args."""
             if len(cog) > 1:
                 halp = discord.Embed(title='Opa!',description='Você colocou categorias demais!',color=discord.Color.red())
-                await ctx.message.author.send('',embed=halp)
+                await ctx.send('',embed=halp)
             else:
                 #"""Command listing within a cog."""
                 found = False
@@ -61,7 +61,7 @@ class Help(commands.Cog):
                     halp = discord.Embed(title='Opa!',description='A categoria "'+cog[0]+'" não existe.',color=discord.Color.red())
                 else:
                     await ctx.message.add_reaction(emoji='✉')
-                await ctx.message.author.send('',embed=halp)
+                await ctx.send('',embed=halp)
     @help.error
     async def help_error(self, ctx, error):
         if isinstance(error, commands.UserInputError):
