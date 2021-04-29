@@ -49,13 +49,13 @@ async def feed():
                             for i, message in enumerate(messages):
                                 message = message.content
                                 if message == cont:
-                                    await asyncio.sleep(5)
+                                    await asyncio.sleep(500)
                                 else:
                                     await channel.send(cont)
                                     f = l['href']
-                                    await asyncio.sleep(5)
+                                    await asyncio.sleep(500)
                     except: 
-                        await asyncio.sleep(30)
+                        await asyncio.sleep(300)
             except:
                 await asyncio.sleep(300)
 @client.event

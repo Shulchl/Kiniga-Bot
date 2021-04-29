@@ -28,14 +28,16 @@ class Role(commands.Cog, name='Cargos'):
 ### EDIT ROLE COLOR
         
     @guild_only()
-    @commands.command(name='editar', help='Recebe um determinado cargo ao digitar `.editar <"história"> <#cor>` __(campo cor é opcional)__ ')
+    @commands.command(name='edit', help='Recebe um determinado cargo ao digitar `.edit <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
-    async def editar(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
+    async def edit(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
         id_role = discord.utils.get(ctx.guild.roles, id=role.id)
-        autorRole = discord.utils.get(ctx.guild.roles, id=id_role.id)
+        autorRole = discord.utils.get(ctx.guild.roles, id=id_role.id) 
+        creatorRole = discord.utils.get(ctx.guild.roles, name="Criador(a)")
+        member = ctx.author
         if autorRole:
-            if not autorRole.is_default():
+            if not autorRole.is_default() and autorRole.position < creatorRole.position:
                 await autorRole.edit(colour = colour)
                 if name != None:
                     await autorRole.edit(name = name)
@@ -46,7 +48,7 @@ class Role(commands.Cog, name='Cargos'):
                 ) 
                 return await ctx.send(embed=embed)
             else:
-                return await ctx.send("Parece que essa tag não é mencionável.")
+                return await ctx.send("Você precisa marcar um cargo válido.")
         else:
             msg = await ctx.send("Você não pode mudar o que não existe.")
             await asyncio.sleep(5)
