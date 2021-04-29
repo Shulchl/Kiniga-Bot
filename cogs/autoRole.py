@@ -32,26 +32,19 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def editar(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
-        autorRole = role
         member = ctx.author
-        if autorRole.is_default():
+        if role.is_default():
             return await ctx.send("Não é possivel alterar isso!")
         else:   
             aRole = []
             a_clean = []
-            text = ' '.join(word for word in ctx.message.content if not word.startswith('.') and not word.startswith('#')) #Cargo
-            if text:
-                a = str(text)
-                a = a.replace('"', '')
-                a_clean = a
-                role_guild = ([role for a_clean in guild.roles[1:]])
-                if role_guild:
-                    role_id = ctx.guild.get_role(int(role_guild.id))
-                    aRole = role_id
-                else:
-                    pass
+            role_guild = ([role for role in ctx.guild.roles[1:]])
+            if role_guild:
+                role_id = ctx.guild.get_role(int(role_guild.id))
+                aRole = role_id
             else:
-                await ctx.send("Você precisa digitar alguma coisa, meu querido.")
+                return
+            
             for aRole in member.roles:
                 await aRole.edit(colour = colour)
                 if name != None:
@@ -63,7 +56,7 @@ class Role(commands.Cog, name='Cargos'):
                 ) 
                 return await ctx.send(embed=embed)
             else:
-                msg = await ctx.send("Você não pode editar uma tag que não possui.")
+                msg = await ctx.send("Você não pode editar algo que não possui.")
                 await asyncio.sleep(5)
                 await msg.delete()
                 await ctx.message.delete()
