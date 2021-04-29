@@ -37,8 +37,7 @@ class Role(commands.Cog, name='Cargos'):
             return await ctx.send("Não é possivel alterar isso!")
         else:   
             aRole = []
-            a_clean = []
-            role_guild = ([role for role in ctx.guild.roles[1:]])
+            role_guild = ([role.name for role in ctx.guild.roles[1:]])
             if role_guild:
                 role_id = ctx.guild.get_role(int(role_guild.id))
                 aRole = role_id
