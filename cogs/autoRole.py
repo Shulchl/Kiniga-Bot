@@ -28,39 +28,32 @@ class Role(commands.Cog, name='Cargos'):
 ### EDIT ROLE COLOR
         
     @guild_only()
-    @commands.command(name='editar', help='Edita um determinado cargo ao digitar `.editar <história> <cor> <nome>` __(campo nome é opcional)__ ')
+    @commands.command(name='editar', help='Recebe um determinado cargo ao digitar `.editar <"história"> <#cor>` __(campo cor é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def editar(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
-        member = ctx.author
-        if role.is_default():
-            return await ctx.send("Não é possivel alterar isso!")
-        else:   
-            aRole = []
-            role_guild = ([role.id for role in ctx.guild.roles[1]])
-            if role_guild:
-                role_id = ctx.guild.get_role(int(role_guild))
-                aRole = role_id
-            else:
-                return
-            
-            for aRole in member.roles:
-                await aRole.edit(colour = colour)
+        id_role = discord.utils.get(ctx.guild.roles, id=role.id)
+        autorRole = discord.utils.get(ctx.guild.roles, id=id_role.id)
+        if autorRole:
+            if not autorRole.is_default():
+                await autorRole.edit(colour = colour)
                 if name != None:
-                    await aRole.edit(name = name)
+                    await autorRole.edit(name = name)
 
                 embed = discord.Embed(
-                    description = (f'As mudanças em {aRole.name} foram aplicadas.'),
+                    description = (f'As mudanças em {autorRole.mention} foram aplicadas.'),
                     colour = colour
                 ) 
                 return await ctx.send(embed=embed)
             else:
-                msg = await ctx.send("Você não pode editar algo que não possui.")
-                await asyncio.sleep(5)
-                await msg.delete()
-                await ctx.message.delete()
-
-
+                return await ctx.send("Parece que essa tag não é mencionável.")
+        else:
+            msg = await ctx.send("Você não pode mudar o que não existe.")
+            await asyncio.sleep(5)
+            await msg.delete()
+            await ctx.message.delete()
+            return
+        
 #### GET PROJECT ROLE
 
     @guild_only()
@@ -257,7 +250,7 @@ class Role(commands.Cog, name='Cargos'):
                             await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
-                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
+                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!", mentionable=True)
                         await member.add_roles(nRole, markAuthorRole)
                         channel = discord.utils.get(self.client.get_all_channels(), guild__name='Testando bot', name='regras')
                         emb6 = discord.Embed(title='Criado!',
@@ -315,7 +308,7 @@ class Role(commands.Cog, name='Cargos'):
                             await asyncio.sleep(2)
                             await ctx.channel.purge(limit=2)
                     else:
-                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!")
+                        nRole = await ctx.guild.create_role(name=a_clean, reason="Nova história!", mentionable=True)
                         await ctx.author.add_roles(nRole, markAuthorRole)
                         emb6 = discord.Embed(title='Criado!',
                                             description='{}, o cargo **{}** foi criado, e agora você é autor!'.format(ctx.author.mention, 

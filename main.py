@@ -41,11 +41,19 @@ async def feed():
                             channel = discord.utils.get(client.get_all_channels(), 
                                                         guild__name='Kiniga Brasil', 
                                                         name='✶⊷彡recentes')
-                            await channel.send('Saiu o **{}** de **{}**!\n{}'.format(l.get_text(), 
-                                                                                     t.get_text(), 
-                                                                                     l['href']))
-                            f = l['href']
-                            await asyncio.sleep(300)
+                            messages = await channel.history(limit=1).flatten()
+                            messages.reverse()
+                            cont = 'Saiu o **{}** de **{}**!\n{}'.format(l.get_text(),
+                                                                        t.get_text(),
+                                                                        l['href'])
+                            for i, message in enumerate(messages):
+                                message = message.content
+                                if message == cont:
+                                    await asyncio.sleep(5)
+                                else:
+                                    await channel.send(cont)
+                                    f = l['href']
+                                    await asyncio.sleep(5)
                     except: 
                         await asyncio.sleep(30)
             except:
