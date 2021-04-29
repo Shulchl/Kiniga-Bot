@@ -26,7 +26,11 @@ async def on_ready():
 async def feed():
     await client.wait_until_ready()
     while not client.is_closed():
-        soup = BeautifulSoup(requests.get("http://kiniga.com/").text,'lxml')
+        h = {
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
+        }
+        soup = BeautifulSoup(requests.get("http://kiniga.com/").text,'lxml', headers=h)
         table = soup.find('table', attrs={'class':'manga-chapters-listing'})
         titles = table.find_all('td', attrs={'class':'title'})[0]
         for t in titles:
