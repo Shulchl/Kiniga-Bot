@@ -33,6 +33,7 @@ class Role(commands.Cog, name='Cargos'):
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def editar(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
         autorRole = role
+        member = ctx.author
         if autorRole.is_default():
             return await ctx.send("Não é possivel alterar isso!")
         else:   
@@ -43,7 +44,9 @@ class Role(commands.Cog, name='Cargos'):
                 a = str(text)
                 a = a.replace('"', '')
                 a_clean = a
+                ([role.name for a_clean in guild.roles[1:]])
                 role_guild = discord.utils.get(ctx.guild.roles, name=a_clean)
+                
                 if role_guild:
                     role_id = ctx.guild.get_role(int(role_guild.id))
                     aRole = role_id
@@ -51,7 +54,7 @@ class Role(commands.Cog, name='Cargos'):
                     pass
             else:
                 await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-            for aRole in ctx.author.roles:
+            for aRole in :
                 await aRole.edit(colour = colour)
                 if name != None:
                     await aRole.edit(name = name)
