@@ -27,7 +27,7 @@ async def feed():
     while not client.is_closed():
         soup = BeautifulSoup(requests.get("http://kiniga.com/").text,'lxml')
         table = soup.find('table', attrs={'class':'manga-chapters-listing'})
-        titles = table.find_all('td', attrs={'class':'title'})[0]
+        titles = table.find('td', attrs={'class':'title'})
         for t in titles:
             try:
                 links = table.find_all('td', attrs={'class':'release'})[0]
