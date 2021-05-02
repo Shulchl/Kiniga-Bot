@@ -139,6 +139,7 @@ class Noticia(commands.Cog):
                             emb = emb.add_field(name="Sinopse:", value=sinopse, inline=False)
                             emb = emb.set_footer(text="Kiniga.com - O limite é a sua imaginação")
                             emb = emb.set_image(url=img)
+                            await ctx.message.delete()
                             await channel.send('',embed=emb)
                             await channel.send("\@everyone")
                             return 
