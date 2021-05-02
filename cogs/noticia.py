@@ -131,7 +131,7 @@ class Noticia(commands.Cog):
                             img = i.get('data-src')
                             channel = discord.utils.get(self.client.get_all_channels(), 
                                                         guild__name='Kiniga Brasil', 
-                                                        name='✶⊷彡recentes')
+                                                        name='✶⊷彡lançamentos')
                             emb = discord.Embed(title="📢 NOVA OBRA PUBLICADA 📢", url=link, color=discord.Color.green())
                             emb = emb.set_author(name=author.get_text(), url=author_link['href'], icon_url=img_author['src'])
                             emb = emb.set_thumbnail(url="https://kiniga.com/wp-content/uploads/fbrfg/favicon-32x32.png")
