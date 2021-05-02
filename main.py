@@ -1,4 +1,4 @@
-import discord, os, asyncio, re
+import discord, os, asyncio
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
@@ -13,14 +13,13 @@ client = commands.Bot(command_prefix = ".",
 
 client.remove_command('help')
 
-
 @client.event
 async def on_ready():
     try:
         print('Tudo perfeito!')
     except:
         return print('Algo deu errado. Reinicie e tente novamente.')
-
+    
 @client.event
 async def feed():
     await client.wait_until_ready()

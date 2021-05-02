@@ -1,5 +1,17 @@
 import discord, asyncio
 from discord.ext import commands  
+import requests
+from bs4 import BeautifulSoup
+
+class NoPrivateMessages(commands.CheckFailure):
+    pass
+
+def guild_only():
+    async def predicate(ctx):
+        if ctx.guild is None:
+            raise NoPrivateMessages('Esse comando não pode ser usado em mensagens privadas!')
+        return True
+    return commands.check(predicate)
 
 class Noticia(commands.Cog):
 
@@ -10,10 +22,10 @@ class Noticia(commands.Cog):
     async def on_ready(self):
         print('Comando de notícias funcionando!    [√]')
 
-    @commands.command(pass_context=True)
+    @guild_only()
+    @commands.command(name='noticia', help='Anuncia no canal especificado ao digitar `.noticia [#canal] + [conteúdo]` ')
     @commands.has_permissions(administrator=True)
     async def noticia(self, ctx, channel: discord.TextChannel, message):
-        
         ### Get text ###
         msg = []
         titulo = []
@@ -85,6 +97,55 @@ class Noticia(commands.Cog):
             await ctx.send('',embed=emb5)
             await asyncio.sleep(3)
             return ctx.channel.purge(limit=2)
+
+    @guild_only()
+    @commands.command(name='release', help='Anuncia o lançamento mais recente ao digitar `.release` ')
+    @commands.has_permissions(administrator=True)
+    async def release(self, ctx):
+        await self.client.wait_until_ready()
+        while not self.client.is_closed():
+            soup = BeautifulSoup(requests.get("http://kiniga.com/").text,'lxml')
+            table = soup.find_all('div', attrs={'class':'tab-content-wrap'})[3]
+            novel_recente = table.find_all('div', attrs={'class':'page-item-detail'})[0]
+            t = novel_recente.find_all('div', attrs={'class':'item-summary'})[0]
+            title = t.find('div', attrs={'class':'post-title'})
+            for t in title:
+                try:
+                    for l in title.find_all('a', href=True):
+                        try:
+                            novel = BeautifulSoup(requests.get(l['href']).text,'lxml')
+                            link = l['href']                                            #link
+                            titulo = title.get_text()                                   #titulo da história
+                            author = novel.find('h4', attrs={'class':'nomedoautor'})    #nome do autor
+                            
+                            h = novel.find('div', attrs={'class':'divdobotao'})         #link do autor
+                            author_link = h.find('a', href=True)
+                            
+                            s = novel.find('div', attrs={'class':'summary__content'})   #sinopse da história
+                            sinopse = s.find('p').get_text()
+                            
+                            a = novel.find('div', attrs={'class':'backgroundautor'})    #img author
+                            img_author = a.find_all('img', src=True)[0]
+                            
+                            i = novel.find('div', attrs={'class':'summary_image'}).find('img', {'class': 'img-responsive'})     #img novel
+                            img = i.get('data-src')
+                            channel = discord.utils.get(self.client.get_all_channels(), 
+                                                        guild__name='Kiniga Brasil', 
+                                                        name='✶⊷彡recentes')
+                            emb = discord.Embed(title="📢 NOVA OBRA PUBLICADA 📢", url=link, color=discord.Color.green())
+                            emb = emb.set_author(name=author.get_text(), url=author_link['href'], icon_url=img_author['src'])
+                            emb = emb.set_thumbnail(url="https://kiniga.com/wp-content/uploads/fbrfg/favicon-32x32.png")
+                            emb = emb.add_field(name="Nome:", value=titulo, inline=False)
+                            emb = emb.add_field(name="Sinopse:", value=sinopse, inline=False)
+                            emb = emb.set_footer(text="Kiniga.com - O limite é a sua imaginação")
+                            emb = emb.set_image(url=img)
+                            await channel.send('',embed=emb)
+                            await channel.send("\@everyone")
+                            return 
+                        except: 
+                            return
+                except:
+                    return
 
 def setup(client):
     client.add_cog(Noticia(client))
