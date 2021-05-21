@@ -1,7 +1,6 @@
-import discord, asyncio, re
+import discord, asyncio
 from discord.ext import commands
-import discord.utils 
-from discord.utils import get
+import discord.utils
 from discord.ext.commands.cooldowns import BucketType
 
 class NoPrivateMessages(commands.CheckFailure):
@@ -24,10 +23,7 @@ class Role(commands.Cog, name='Cargos'):
     async def on_ready(self):
         print('Categoria de Cargos funcionando!       [√]')
 
-
-### EDIT ROLE COLOR
-        
-    @guild_only()
+    @guild_only() # EDIT ROLE COLOR #
     @commands.command(name='editar', help='Recebe um determinado cargo ao digitar `.editar <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
@@ -56,9 +52,7 @@ class Role(commands.Cog, name='Cargos'):
             await ctx.message.delete()
             return
         
-#### GET PROJECT ROLE
-
-    @guild_only()
+    @guild_only() # GET PROJECT ROLE #
     @commands.command(name='projeto', help='Recebe um determinado cargo ao digitar `.projeto <história> <usuário>` __(campo usuário é opcional)__ ')
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
@@ -79,7 +73,7 @@ class Role(commands.Cog, name='Cargos'):
                 return member == ctx.author and str(reaction.emoji) == '✅'
 
             try:
-                await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
+                await self.client.wait_for('reaction_add',timeout=300, check=check_ask)
                 aRole = []
                 a_clean = []
 
@@ -95,7 +89,6 @@ class Role(commands.Cog, name='Cargos'):
                         pass
                 else:
                     await ctx.send("Você precisa digitar alguma coisa, meu querido.")
-                    
 
                 if aRole:
                     emb4 = discord.Embed(title='Opa!',
@@ -115,7 +108,7 @@ class Role(commands.Cog, name='Cargos'):
                         return eqpRole in member.roles and str(reaction.emoji) == '✅'
 
                     try:
-                        await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
+                        await self.client.wait_for('reaction_add',timeout=300, check=check_add)
                         await member.add_roles(autorRole, markAuthorRole)
                         emb4 = discord.Embed(title='Adicionado!',
                                             description='O cargo {} foi adicionado, e agora você é autor!.'.format(autorRole.mention), 
@@ -196,7 +189,7 @@ class Role(commands.Cog, name='Cargos'):
             def check_create(reaction, member):
                 return eqpRole in member.roles and reaction.message.id == msg.id and str(reaction.emoji) == '✅'
             try:
-                await self.client.wait_for('reaction_add',timeout=60.0, check=check_create)
+                await self.client.wait_for('reaction_add',timeout=300, check=check_create)
                 if user:
                     if aRole:
                         emb = discord.Embed(title='Opa!',
@@ -208,7 +201,7 @@ class Role(commands.Cog, name='Cargos'):
                             return member == ctx.author and str(reaction.emoji) == '✅'
                             
                         try:
-                            await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
+                            await self.client.wait_for('reaction_add',timeout=300, check=check_ask)
                             role_id = aRole.id
                             for role_id in member.roles:
                                 emb4 = discord.Embed(title='Opa!',
@@ -229,7 +222,7 @@ class Role(commands.Cog, name='Cargos'):
                                     return eqpRole in member.roles and str(reaction.emoji) == '✅'
                                 
                                 try:
-                                    await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
+                                    await self.client.wait_for('reaction_add',timeout=300, check=check_add)
                                     await member.add_roles(aRole, markAuthorRole)
                                     channel = discord.utils.get(self.client.get_all_channels(), guild__name='Kiniga Brasil', name='regras')
                                     emb4 = discord.Embed(title='Adicionado!',
@@ -271,7 +264,7 @@ class Role(commands.Cog, name='Cargos'):
                             return member == ctx.author and str(reaction.emoji) == '✅'
                             
                         try:
-                            await self.client.wait_for('reaction_add',timeout=20.0, check=check_ask)
+                            await self.client.wait_for('reaction_add',timeout=300, check=check_ask)
                             for role_id in member.roles:
                                 emb4 = discord.Embed(title='Opa!',
                                                     description='Parece que {} já tem esse cargo.'.format(member.mention),
@@ -289,7 +282,7 @@ class Role(commands.Cog, name='Cargos'):
                                     return eqpRole in member.roles and str(reaction.emoji) == '✅'
                                 
                                 try:
-                                    await self.client.wait_for('reaction_add',timeout=60.0, check=check_add)
+                                    await self.client.wait_for('reaction_add',timeout=300, check=check_add)
                                     await member.add_roles(aRole, markAuthorRole)
                                     emb4 = discord.Embed(title='Adicionado!',
                                                         description='O cargo {} foi adicionado, e agora você é autor!'.format(aRole),
@@ -340,10 +333,8 @@ class Role(commands.Cog, name='Cargos'):
             await ctx.channel.purge(limit=2)
         elif isinstance(error, commands.CheckFailure):
             await ctx.send(error)
-
-### REMOVE PROJECT ROLE
   
-    @guild_only()         
+    @guild_only() # REMOVE PROJECT ROLE #
     @commands.command(name='r', help='Deletar história ao digitar `.r <cargo> <usuário>` __(campo usuário é opcional)__ ')
     @commands.has_permissions(manage_roles=True)
     async def r(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
