@@ -37,7 +37,6 @@ async def feed():
                         member = channel.guild.get_member(741770490598653993)
                         webhooks = await channel.webhooks()
                         webhook = discord.utils.get(webhooks, name = "Capitulos Recentes")
-                        webhooks = await channel.webhooks()
                         for i, message in enumerate(messages):
                             message = message.content
                             if message != cont:
