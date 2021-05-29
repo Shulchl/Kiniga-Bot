@@ -14,6 +14,10 @@ client = commands.Bot(command_prefix = ".",
 client.remove_command('help')
     
 @client.event
+async def on_member_join(member):
+     await member.add_roles(837025056554090517)
+
+@client.event
 async def feed():
     await client.wait_until_ready()
     while not client.is_closed():

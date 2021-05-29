@@ -338,6 +338,7 @@ class Role(commands.Cog, name='Cargos'):
     @commands.has_permissions(manage_roles=True)
     async def r(self, ctx, role: discord.Role, member: discord.Member = None, reason=None):
         channel = ctx.guild.get_channel(831561655329751062)
+        h_role = discord.utils.get(ctx.guile.roles, id=837020515004317707)
         if ctx.message.channel == channel:
             member = member or ctx.author
 
@@ -369,7 +370,7 @@ class Role(commands.Cog, name='Cargos'):
             try:
                 await self.client.wait_for('reaction_add',timeout=20.0, check=check)
                 if aRole:
-                    await member.remove_roles(role)
+                    await member.remove_roles(role, h_role)
                     emb = discord.Embed(title='?!',
                                         description='Deseja remover completamente? \nEssa ação não pode ser desfeita!',
                                         color=discord.Color.red()).set_footer(text='Use a reação para confirmar ou não reaja para cancelar.')
