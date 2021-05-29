@@ -28,9 +28,8 @@ class Role(commands.Cog, name='Cargos'):
     @commands.max_concurrency(1, per=BucketType.default, wait=False)
     @commands.has_any_role("Autor(a)", "Criador(a)", "Ajudante", "Equipe")
     async def editar(self, ctx, role: discord.Role, colour: discord.Colour, name = None):
-        id_role = discord.utils.get(ctx.guild.roles, id=role.id)
-        autorRole = discord.utils.get(ctx.guild.roles, id=id_role.id) 
-        creatorRole = discord.utils.get(ctx.guild.roles, name="〈▪▪▪▪▪▪▪▪▪▪▪▪Histórias▪▪▪▪▪▪▪▪▪▪▪▪〉")
+        autorRole = discord.utils.get(ctx.guild.roles, id=role.id) 
+        creatorRole = discord.utils.get(ctx.guild.roles, id=837020515004317707)
         member = ctx.author
         if autorRole:
             if not autorRole.is_default() and autorRole.position < creatorRole.position:
@@ -63,7 +62,7 @@ class Role(commands.Cog, name='Cargos'):
             member = member or ctx.author
             role_id = role.id
             autorRole = discord.utils.get(ctx.guild.roles, id=role_id)
-            eqpRole = discord.utils.get(ctx.guild.roles, name="Equipe")
+            eqpRole = discord.utils.get(ctx.guild.roles, id=667838546790318090)
             emb = discord.Embed(title='Opa!',
                                 description='O cargo **{}** já existe, deseja adicioná-lo?!'.format(autorRole.mention),
                                 color=discord.Color.orange()).set_footer(text='Use a reação para confirmar.')
@@ -133,7 +132,7 @@ class Role(commands.Cog, name='Cargos'):
     @projeto.error
     async def projeto_error(self, ctx, error):
         if isinstance(error, commands.RoleNotFound):
-            eqpRole = discord.utils.get(ctx.guild.roles, name="Equipe")
+            eqpRole = discord.utils.get(ctx.guild.roles, id=667838546790318090)
             markAuthorRole    = discord.utils.get(ctx.guild.roles, id=837020515004317707)
             #split the message into words
             string = str(ctx.message.content)
@@ -358,7 +357,6 @@ class Role(commands.Cog, name='Cargos'):
             else:
                 await ctx.send("Você precisa digitar alguma coisa, meu querido.")
 
-            #nomeRole = discord.utils.get(ctx.guild.roles, name=role)
             emb = discord.Embed(title='Tem certeza?',
                                 description='Deseja realmente remover de {}?'.format(member.mention),
                                 color=discord.Color.orange()).set_footer(text='Use a reação para confirmar')

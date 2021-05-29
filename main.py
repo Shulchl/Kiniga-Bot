@@ -27,7 +27,7 @@ async def feed():
                     try:
                         channel = discord.utils.get(client.get_all_channels(), 
                                                     guild__name='Kiniga Brasil', 
-                                                    name='✶⊷彡recentes')
+                                                    id=785300070857572372)
                         messages = await channel.history(limit=1).flatten()
                         messages.reverse()
                         cont = 'Saiu o **{}** de **{}**!\n{}'.format(l.get_text(),
