@@ -25,12 +25,13 @@ async def feed():
                 links = table.find_all('td', attrs={'class':'release'})[0]
                 for l in links.find_all('a', href=True):
                     try:
+                        emoji = client.get_emoji(id=769235205407637505)
                         channel = discord.utils.get(client.get_all_channels(), 
                                                     guild__name='Kiniga Brasil', 
                                                     id=785300070857572372)
                         messages = await channel.history(limit=1).flatten()
                         messages.reverse()
-                        cont = 'Saiu o **{}** de **{}**!\n{}'.format(l.get_text(),
+                        cont = 'Saiu o **{}** de **{}**!\n{}'.format(emoji, l.get_text(),
                                                                     t.get_text(),
                                                                     l['href'])
                         member = channel.guild.get_member(741770490598653993)
