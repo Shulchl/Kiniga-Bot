@@ -15,7 +15,9 @@ client.remove_command('help')
     
 @client.event
 async def on_member_join(member):
-     await member.add_roles(837025056554090517)
+    role = discord.utils.get(member.guild.roles, id=837025056554090517)
+    mrole = discord.utils.get(member.guild.roles, id=667838592516882453)
+    await member.add_roles(role, mrole)
 
 @client.event
 async def feed():
