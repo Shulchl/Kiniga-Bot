@@ -37,7 +37,7 @@ async def feed():
                                                     id=785300070857572372)
                         messages = await channel.history(limit=1).flatten()
                         messages.reverse()
-                        cont = 'Saiu o **{}** de **{}**!\n{}'.format(emoji, l.get_text(),
+                        cont = '{} | Saiu o **{}** de **{}**!\n{}'.format(emoji, l.get_text(),
                                                                     t.get_text(),
                                                                     l['href'])
                         member = channel.guild.get_member(741770490598653993)
